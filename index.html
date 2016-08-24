@@ -15,33 +15,53 @@
 		</script>
 
 		<script type="text/javascript">
-			function apRow(tag, val) {
-				return '<div class="ap-row"><div class="ap-col ap-col-tag"><input type="text" value="'+tag+'"></div><div class="ap-col ap-col-val"><input type="text" value="'+val+'"><i class="material-icons no-highlight">delete</i></div></div>';
-			};
-
-			var deletedAttributes = [];
-
-			function getAttributes(oDOM) {
-				var attributes = [];
-
-				var elements = oDOM.getElementsByTagName("*");
-
-				var element;
-    			for (var i = 0; i < elements.length; i++) {
-
-    				element = $(elements[i])[0];
-        			if (element.children.length === 0) {
-        				attributes.push({
-        					tag: element.tagName,
-        					val: element.textContent
-        				});
-        			}
-    			}
-
-				return attributes;
-			}
 
 			$(document).ready(function () {
+
+				/* General */
+
+				var currentStep = 1;
+
+				$('.sidebar-step').click(function (ev) {
+					var el = $(ev.target);
+
+					$('.sidebar-step').removeClass('current-step');
+					if(el.hasClass('sidebar-step'))
+						el.addClass('current-step');
+					else
+						$(el[0].parentElement).addClass('current-step');
+				});
+
+				/* STEP 1 Generate */
+
+				/* STEP 2 Build */
+
+				function apRow(tag, val) {
+					return '<div class="ap-row"><div class="ap-col ap-col-tag"><input type="text" value="'+tag+'"></div><div class="ap-col ap-col-val"><input type="text" value="'+val+'"><i class="material-icons no-highlight">delete</i></div></div>';
+				};
+
+				var deletedAttributes = [];
+
+				function getAttributes(oDOM) {
+					var attributes = [];
+
+					var elements = oDOM.getElementsByTagName("*");
+
+					var element;
+	    			for (var i = 0; i < elements.length; i++) {
+
+	    				element = $(elements[i])[0];
+	        			if (element.children.length === 0) {
+	        				attributes.push({
+	        					tag: element.tagName,
+	        					val: element.textContent
+	        				});
+	        			}
+	    			}
+
+					return attributes;
+				}
+
 				$('#generate-button').click(function () {
 
 					var oParser = new DOMParser();
@@ -67,6 +87,11 @@
 
 					ga('send', 'event', 'Step 2 Build', 'click', 'generate attributes');
 				});
+
+				/* STEP 3 Test */
+
+				/* STEP 4 Submit */
+	
 			});
 		</script>
 
