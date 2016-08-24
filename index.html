@@ -6,21 +6,30 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 
 		<script type="text/javascript">
-			var apRow = '<div class="ap-row"><div class="ap-col ap-col-tag"><input type="checkbox" checked><input type="text"></div><div class="ap-col ap-col-val"><input type="text"></div></div>';
+			function apRow(tag, val) {
+				return '<div class="ap-row"><div class="ap-col ap-col-tag"><input type="text" value="'+tag+'"></div><div class="ap-col ap-col-val"><input type="text" value="'+val+'"><i class="material-icons">delete</i></div></div>';
+			};
+
+			var deletedAttributes = [];
 
 			function isValidXML(input) {
 				return true;
 			}
 
 			function getAttributes(xml) {
-				return [{
+				var attributes = [];
+
+				attributes.push({
 					tag: 'a',
 					val: 'b'
-				},
-				{
+				});
+
+				attributes.push({
 					tag: 'c',
 					val: 'd'
-				}];
+				})
+
+				return attributes;
 			}
 
 			$(document).ready(function () {
@@ -31,9 +40,16 @@
 						var attributes = getAttributes($('#panel-right textarea').val());
 
 						for(var i = 0; i < attributes.length; i++) {
-							$('#ap-main').append(apRow);
-							$('.ap-row:last .ap-col-tag input[type="text"]').val(attributes[i]['tag']);
-							$('.ap-row:last .ap-col-val input[type="text"]').val(attributes[i]['val']);
+							$('#ap-main').append(apRow(attributes[i]['tag'], attributes[i]['val']));
+
+							$('.ap-row:last .ap-col-val i').click(function (ev) {
+								var el = $(ev.target);
+
+								deletedAttributes.push(el[0].parentElement.parentElement.outerHTML);
+								console.log(deletedAttributes);
+
+								$(el[0].parentElement.parentElement).remove();
+							});
 						}
 					}
 				});
@@ -241,16 +257,22 @@
 				height: 100%;				
 			}
 
-			.ap-col input[type="checkbox"] {
-				width: 20px;
-			}
-
 			.ap-col-tag input[type="text"] {
-				width: calc(100% - 35px);
+				width: calc(100% - 15px);
 			}
 
 			.ap-col-val input[type="text"] {
-				width: calc(100% - 10px);
+				width: calc(100% - 35px);
+			}
+
+			.ap-col-val i {
+				margin-left: 10px;
+				color: rgba(0,0,0,0.3);
+				cursor: default;
+			}
+
+			.ap-col-val i:hover {
+				color: hsl(336, 100%, 50%);
 			}
 
 			#ap-footer {
