@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>XML Spec Generator</title>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+		<script type="text/javascript">
+			var apRow = '<div class="ap-row"><div class="ap-col ap-col-tag"><input type="checkbox" checked><input type="text"></div><div class="ap-col ap-col-val"><input type="text"></div></div>';
+
+			function isValidXML(input) {
+				return true;
+			}
+
+			function getAttributes(xml) {
+				return [{
+					tag: 'a',
+					val: 'b'
+				},
+				{
+					tag: 'c',
+					val: 'd'
+				}];
+			}
+
+			$(document).ready(function () {
+				$('#generate-button').click(function () {
+					if (isValidXML($('#panel-right textarea').val())) {
+						$('#wrapper').removeClass('disabled-div');
+
+						var attributes = getAttributes($('#panel-right textarea').val());
+
+						for(var i = 0; i < attributes.length; i++) {
+							$('#ap-main').append(apRow);
+							$('.ap-row:last .ap-col-tag input[type="text"]').val(attributes[i]['tag']);
+							$('.ap-row:last .ap-col-val input[type="text"]').val(attributes[i]['val']);
+						}
+					}
+				});
+			});
+		</script>
+
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+		<style>
+			* {
+				box-sizing: border-box;
+			}
+
+			body {
+				margin: 0;
+				padding: 0;
+				font-family: sans-serif;
+				background: #eeeeee;
+				text-align: center;
+			}
+
+			textarea {
+				resize: none;
+			}
+
+			h3 {
+				font-weight: lighter;
+			}
+
+			i {
+				font-size: inherit !important;
+				vertical-align: text-top;
+			}
+
+			input[type="text"] {
+				border: 0;
+				border-bottom: 1px solid rgba(0,0,0,0.15);
+				padding-bottom: 5px;
+			}
+
+			input[type="text"]:focus {
+				outline: none;
+				border-color: hsl(336, 100%, 55%);
+			}
+
+			.disabled-div {
+				pointer-events: none;
+				opacity: 0.4;
+			}
+
+			#header {
+				background: hsl(336, 100%, 50%);
+				height: 100px;
+				line-height: 50px;
+				padding: 10px;
+				text-align: center;
+				color: white;
+				font-size: 1.4em;
+				box-sizing: content-box;
+			}
+
+			#panel {
+				max-width: 600px;
+				width: 100%;
+				height: 150px;
+				background: white;
+				margin: -50px auto 0 auto;
+				box-shadow: 0 0 20px rgba(0,0,0,0.1);
+				position: relative;
+			}
+
+			#panel-left, #panel-right {
+				height: 100%;
+				float: left;
+				padding: 10px;
+			}
+
+			#panel-left {
+				width: 35%;
+				border-right: 1px solid rgba(0,0,0,0.15);
+				display: flex;
+				flex-flow: column;
+			}
+
+			#panel-right {
+				width: 65%;
+			}
+
+			#panel-left input[type="text"] {
+				width: 100%;
+				font-size: medium;
+				flex: 0 1 auto;
+				margin-bottom: 5px;
+			}
+
+			#panel-left textarea {
+				width: 100%;
+				height: 100%;
+				flex: 1 1 auto;
+				border: none;
+			}
+
+			#panel-left textarea:focus {
+				outline: none;
+				background: hsl(336, 100%, 98%);
+			}
+
+			#panel-right textarea {
+				width: 100%;
+				height: 100%;
+				border: none;
+			}
+
+			#panel-right textarea:focus {
+				outline: none;
+				background: hsl(336, 100%, 98%);
+			}
+
+			button {
+				background: hsl(336, 100%, 50%);
+				border: none;
+				color: white;
+				border-radius: 2px;
+			}
+
+			button:focus {
+				outline: none;
+			}
+
+			button:active {
+				outline: none;
+				background: hsl(336, 100%, 45%);
+			}
+
+			#generate-button {
+				font-size: large;
+				margin: 20px;
+				padding: 0 20px;
+				height: 40px;
+				line-height: 40px;
+				box-shadow: 0 0 10px rgba(0,0,0,0.2);
+			}
+
+			#generate-button:focus {
+				box-shadow: 0 0 10px rgba(0,0,0,0.5);
+			}
+
+			#generate-button:active {
+				box-shadow: 0 0 10px rgba(0,0,0,0.5);
+			}
+
+			#wrapper {
+				max-width: 600px;
+			    width: 100%;
+			    height: calc(100% - 300px);
+			    margin: 0 auto;
+			    position: absolute;
+			    left: 50%;
+			    transform: translate(-50%, 0);
+			}
+
+			#attributes-panel, #export-panel {
+				height: calc(100% - 30px);
+				float: left;
+				background: white;
+				box-shadow: 0 0 20px rgba(0,0,0,0.1);
+				text-align: left;
+			}
+
+			.header {
+				background: rgba(0,0,0,0.05);
+				color: grey;
+				height: 50px;
+				line-height: 50px;
+				font-weight: lighter;
+			}
+
+			#attributes-panel {
+				width: calc(65% - 10px);
+				margin-right: 10px;
+				display: flex;
+				flex-flow: column;
+			}
+
+			#ap-header {
+				flex: 0 1 auto;
+			}
+
+			#ap-main {
+				flex: 1 1 auto;
+				overflow: auto;
+			}
+
+			.ap-row {
+				height: 50px;
+				line-height: 50px;
+				width: 100%;
+				border-bottom: 1px solid rgba(0,0,0,0.1);
+			}
+
+			.ap-col {
+				width: 50%;
+				float: left;
+				padding-left: 10px;
+				height: 100%;				
+			}
+
+			.ap-col input[type="checkbox"] {
+				width: 20px;
+			}
+
+			.ap-col-tag input[type="text"] {
+				width: calc(100% - 35px);
+			}
+
+			.ap-col-val input[type="text"] {
+				width: calc(100% - 10px);
+			}
+
+			#ap-footer {
+				flex: 0 1 auto;
+				height: 50px;
+				background: hsl(336, 100%, 50%);
+				color: white;
+				line-height: 50px;
+				padding: 0 10px;
+			}
+
+			#ap-footer:hover {
+				background: hsl(336, 100%, 45%);
+			}
+
+			#export-panel {
+				width: 35%;
+			}
+
+			#export-panel .header {
+				padding: 0 10px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="header">
+			XML Spec Generator
+		</div>
+		<div id="panel">
+			<div id="panel-left">
+				<input type="text" placeholder="Rule name" autofocus></input>
+				<textarea placeholder="Rule description"></textarea>
+			</div>
+			<div id="panel-right">
+				<textarea placeholder="Paste valid MediaInfo XML here"></textarea>
+			</div>
+		</div>
+		<button id="generate-button">Generate</button>
+		<div id="wrapper" class="disabled-div">
+			<div id="attributes-panel">
+				<div id="ap-header" class="header">
+					<div class="ap-col">
+						<i class="material-icons">label</i>
+						Tag
+					</div>
+					<div class="ap-col">
+						<i class="material-icons">border_color</i>
+						Value
+					</div>
+				</div>
+				<div id="ap-main">
+				</div>
+				<div id="ap-footer">
+					<i class="material-icons">add_circle</i>
+					Add new attribute
+				</div>
+			</div>
+			<div id="export-panel">
+				<div class="header">
+					Export settings
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
