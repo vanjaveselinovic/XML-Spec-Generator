@@ -16,7 +16,7 @@
 
 		<script type="text/javascript">
 			function apRow(tag, val) {
-				return '<div class="ap-row"><div class="ap-col ap-col-tag"><input type="text" value="'+tag+'"></div><div class="ap-col ap-col-val"><input type="text" value="'+val+'"><i class="material-icons">delete</i></div></div>';
+				return '<div class="ap-row"><div class="ap-col ap-col-tag"><input type="text" value="'+tag+'"></div><div class="ap-col ap-col-val"><input type="text" value="'+val+'"><i class="material-icons no-highlight">delete</i></div></div>';
 			};
 
 			var deletedAttributes = [];
@@ -45,10 +45,10 @@
 				$('#generate-button').click(function () {
 
 					var oParser = new DOMParser();
-					var oDOM = oParser.parseFromString($('#panel-right textarea').val(), "text/xml");
+					var oDOM = oParser.parseFromString($('#pp-right textarea').val(), "text/xml");
 
 					if ($(oDOM.documentElement)[0].outerHTML.indexOf('parsererror') === -1) {
-						$('#wrapper').removeClass('disabled-div');
+						$('#attributes-panel').removeClass('disabled-div');
 
 						var attributes = getAttributes(oDOM);
 
@@ -72,6 +72,9 @@
 
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet">
+
 		<style>
 			* {
 				box-sizing: border-box;
@@ -80,17 +83,12 @@
 			body {
 				margin: 0;
 				padding: 0;
-				font-family: sans-serif;
+				font-family: 'Open Sans', sans-serif;
 				background: #eeeeee;
-				text-align: center;
 			}
 
 			textarea {
 				resize: none;
-			}
-
-			h3 {
-				font-weight: lighter;
 			}
 
 			i {
@@ -109,12 +107,130 @@
 				border-color: hsl(336, 100%, 55%);
 			}
 
+			input, textarea, keygen, select, button {
+				font-family: 'Open Sans', sans-serif;
+			}
+
 			.disabled-div {
 				pointer-events: none;
 				opacity: 0.4;
 			}
 
-			#header {
+			.no-highlight {
+				cursor: default;
+				-webkit-user-select: none; /* Chrome/Safari/Opera */
+  				-moz-user-select: none; /* Firefox */
+  				-ms-user-select: none; /* Internet Explorer/Edge */
+  				user-select: none;
+			}
+
+			#sidebar {
+				position: absolute;
+				width: 150px;
+				height: 100%;
+				background: hsl(336, 100%, 40%);
+				z-index: 1;
+				color: white;
+			}
+
+			#sidebar-top {
+				height: 150px;
+				border-bottom: 1px solid hsl(336, 100%, 35%);
+				line-height: 150px;
+				text-align: center;
+				font-family: 'Slabo 27px', sans-serif;
+			}
+
+			.sidebar-step {
+				border-bottom: 1px solid hsl(336, 100%, 35%);
+				text-align: center;
+				padding: 20px 0;
+				position: relative;
+				cursor: default;
+				-webkit-user-select: none; /* Chrome/Safari/Opera */
+  				-moz-user-select: none; /* Firefox */
+  				-ms-user-select: none; /* Internet Explorer/Edge */
+  				user-select: none;
+			}
+
+			.sidebar-step:hover {
+				background: hsl(336, 100%, 38%);
+			}
+
+			.sidebar-step h4, .sidebar-step h3 {
+				font-weight: normal;
+				line-height: 1;
+				margin: 0;
+				padding: 0;
+			}
+
+			.sidebar-step h4 {
+				text-transform: uppercase;
+				font-size: 0.8em;
+				font-family: 'Slabo 27px', monospace;
+				color: hsl(336, 100%, 30%);
+			}
+
+			.sidebar-step h3 {
+				margin-top: 5px;
+				color: hsl(336, 100%, 50%);
+			}
+
+			.current-step, .current-step:hover {
+				background: hsl(336, 100%, 35%);
+			}
+
+			.current-step:after {
+				content: ' ';
+			    position: absolute;
+				right: 0;
+				top: 50%;
+				transform: translate(0, -50%);
+				border-top: 10px solid transparent;
+				border-right: 10px solid #eee;
+				border-bottom: 10px solid transparent;
+			}
+
+			.current-step h4 {
+				color: hsl(336, 100%, 20%);
+				font-weight: bold;
+			}
+
+			.current-step h3 {
+				color: white;
+			}
+
+			#sidebar-bottom {
+				font-size: 0.8em;
+				text-align: center;
+				margin-top: 30px;
+			}
+
+			.page {
+				width: 100%;
+				height: 100%;
+				position: absolute;
+				display: flex;
+				flex-flow: column;
+				padding: 50px 0;
+			}
+
+			.section {
+				max-width: 600px;
+				width: 100%;
+				margin: 0 auto;
+				flex: 0 1 auto;
+			}
+
+			.section-center {
+				text-align: center;
+			}
+
+			.section-fill {
+				flex: 1 1 auto;
+			}
+
+			.section-header {
 				background: hsl(336, 100%, 50%);
 				height: 100px;
 				line-height: 50px;
@@ -125,60 +241,62 @@
 				box-sizing: content-box;
 			}
 
-			#panel {
+			.section-panel {
 				max-width: 600px;
 				width: 100%;
-				height: 150px;
 				background: white;
-				margin: -50px auto 0 auto;
+				margin: 0 auto;
 				box-shadow: 0 0 20px rgba(0,0,0,0.1);
-				position: relative;
 			}
 
-			#panel-left, #panel-right {
+			#paste-panel {
+				height: 150px;
+			}
+
+			#pp-left, #pp-right {
 				height: 100%;
 				float: left;
 				padding: 10px;
 			}
 
-			#panel-left {
+			#pp-left {
 				width: 35%;
 				border-right: 1px solid rgba(0,0,0,0.15);
 				display: flex;
 				flex-flow: column;
 			}
 
-			#panel-right {
+			#pp-right {
 				width: 65%;
 			}
 
-			#panel-left input[type="text"] {
+			#pp-left input[type="text"] {
 				width: 100%;
 				font-size: medium;
 				flex: 0 1 auto;
 				margin-bottom: 5px;
 			}
 
-			#panel-left textarea {
+			#pp-left textarea {
 				width: 100%;
 				height: 100%;
 				flex: 1 1 auto;
 				border: none;
 			}
 
-			#panel-left textarea:focus {
+			#pp-left textarea:focus {
 				outline: none;
 				background: hsl(336, 100%, 98%);
 			}
 
-			#panel-right textarea {
+			#pp-right textarea {
 				width: 100%;
 				height: 100%;
 				border: none;
 				font-family: monospace;
 			}
 
-			#panel-right textarea:focus {
+			#pp-right textarea:focus {
 				outline: none;
 				background: hsl(336, 100%, 98%);
 			}
@@ -216,23 +334,11 @@
 				box-shadow: 0 0 10px rgba(0,0,0,0.5);
 			}
 
-			#wrapper {
-				max-width: 600px;
-			    width: 100%;
+			#attributes-panel {
 			    height: calc(100% - 300px);
 			    min-height: 179px;
-			    margin: 0 auto;
-			    position: absolute;
-			    left: 50%;
-			    transform: translate(-50%, 0);
-			}
-
-			#attributes-panel, #export-panel {
-				height: calc(100% - 30px);
-				float: left;
-				background: white;
-				box-shadow: 0 0 20px rgba(0,0,0,0.1);
-				text-align: left;
+				display: flex;
+				flex-flow: column;
 			}
 
 			.header, .ap-row, #ap-footer {
@@ -246,11 +352,14 @@
 				font-weight: lighter;
 			}
 
-			#attributes-panel {
-				width: calc(65% - 10px);
-				margin-right: 10px;
-				display: flex;
-				flex-flow: column;
+			.header i {
+				height: 42px;
+				position: absolute;
+    			line-height: 42px;
+			}
+
+			.header span {
+				padding-left: 20px;
 			}
 
 			#ap-header {
@@ -285,11 +394,6 @@
 			.ap-col-val i {
 				margin-left: 10px;
 				color: rgba(0,0,0,0.3);
-				cursor: default;
-				-webkit-user-select: none; /* Chrome/Safari/Opera */
-  				-moz-user-select: none; /* Firefox */
-  				-ms-user-select: none; /* Internet Explorer/Edge */
-  				user-select: none;
 			}
 
 			.ap-col-val i:hover {
@@ -318,29 +422,49 @@
 	</head>
 
 	<body>
-		<div id="header">
-			XML Spec Generator
-		</div>
-		<div id="panel">
-			<div id="panel-left">
-				<input type="text" placeholder="Rule name" autofocus></input>
-				<textarea placeholder="Rule description"></textarea>
+		<div id="sidebar">
+			<div id="sidebar-top">Spec Builder</div>
+			<div class="sidebar-step current-step">
+				<h4>Step 1</h4>
+				<h3>Generate</h3>
 			</div>
-			<div id="panel-right">
-				<textarea placeholder="Paste valid MediaInfo XML here"></textarea>
+			<div class="sidebar-step">
+				<h4>Step 2</h4>
+				<h3>Build</h3>
 			</div>
+			<div class="sidebar-step">
+				<h4>Step 3</h4>
+				<h3>Test</h3>
+			</div>
+			<div class="sidebar-step">
+				<h4>Step 4</h4>
+				<h3>Submit</h3>
+			</div>
+			<div id="sidebar-bottom">About</div>
 		</div>
-		<button id="generate-button">Generate</button>
-		<div id="wrapper" class="disabled-div">
-			<div id="attributes-panel">
+		<div class="page"></div>
+		<div class="page">
+			<div id="paste-panel" class="section section-panel">
+				<div id="pp-left">
+					<input type="text" placeholder="Rule name" autofocus></input>
+					<textarea placeholder="Rule description"></textarea>
+				</div>
+				<div id="pp-right">
+					<textarea placeholder="Paste valid MediaInfo XML here"></textarea>
+				</div>
+			</div>
+			<div class="section section-center">
+				<button id="generate-button">Generate</button>
+			</div>
+			<div id="attributes-panel" class="section section-panel section-fill">
 				<div id="ap-header" class="header">
 					<div class="ap-col">
 						<i class="material-icons">label</i>
-						Tag
+						<span>Tag</span>
 					</div>
 					<div class="ap-col">
 						<i class="material-icons">border_color</i>
-						Value
+						<span>Value</span>
 					</div>
 				</div>
 				<div id="ap-main">
@@ -348,11 +472,6 @@
 				<div id="ap-footer">
 					<i class="material-icons">add_circle</i>
 					Add new attribute
-				</div>
-			</div>
-			<div id="export-panel">
-				<div class="header">
-					Export settings
 				</div>
 			</div>
 		</div>
