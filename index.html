@@ -65,9 +65,12 @@
 				$('#generate-button').click(function () {
 
 					var oParser = new DOMParser();
-					var oDOM = oParser.parseFromString($('#pp-right textarea').val(), "text/xml");
+					var oDOM = oParser.parseFromString($('#rule-xml').val().trim(), "text/xml");
 
-					if ($(oDOM.documentElement)[0].outerHTML.indexOf('parsererror') === -1) {
+					if ($('#rule-name').val() !== ''
+						&& $('#rule-desc').val() !== ''
+						&& $(oDOM.documentElement)[0].outerHTML.indexOf('parsererror') === -1) {
+
 						$('#attributes-panel').removeClass('disabled-div');
 
 						var attributes = getAttributes(oDOM);
@@ -82,6 +85,17 @@
 
 								$(el[0].parentElement.parentElement).remove();
 							});
+						}
+					}
+					else {
+						if($('#rule-name').val() === '') {
+							$('#rule-name').addClass('invalid-input');
+						}
+						if ($('#rule-desc').val() === '') {
+							$('#rule-desc').addClass('invalid-input');
+						}
+						if ($(oDOM.documentElement)[0].outerHTML.indexOf('parsererror') !== -1) {
+							$('#rule-xml').addClass('invalid-input');
 						}
 					}
 
@@ -118,7 +132,6 @@
 
 			i {
 				font-size: inherit !important;
-				vertical-align: text-top;
 			}
 
 			input[type="text"] {
@@ -130,6 +143,9 @@
 			input[type="text"]:focus {
 				outline: none;
 				border-color: hsl(336, 100%, 55%);
+			}
+
+			.invalid-input {
 			}
 
 			input, textarea, keygen, select, button {
@@ -296,33 +312,33 @@
 				width: 65%;
 			}
 
-			#pp-left input[type="text"] {
+			#rule-name {
 				width: 100%;
 				font-size: medium;
 				flex: 0 1 auto;
 				margin-bottom: 5px;
 			}
 
-			#pp-left textarea {
+			#rule-desc {
 				width: 100%;
 				height: 100%;
 				flex: 1 1 auto;
 				border: none;
 			}
 
-			#pp-left textarea:focus {
+			#rule-desc:focus {
 				outline: none;
 				background: hsl(336, 100%, 98%);
 			}
 
-			#pp-right textarea {
+			#rule-xml {
 				width: 100%;
 				height: 100%;
 				border: none;
 				font-family: monospace;
 			}
 
-			#pp-right textarea:focus {
+			#rule-xml:focus {
 				outline: none;
 				background: hsl(336, 100%, 98%);
 			}
@@ -472,17 +488,17 @@
 		<div class="page">
 			<div id="paste-panel" class="section section-panel">
 				<div id="pp-left">
-					<input type="text" placeholder="Rule name" autofocus></input>
-					<textarea placeholder="Rule description"></textarea>
+					<input type="text" id="rule-name" placeholder="Rule name" autofocus></input>
+					<textarea id="rule-desc" placeholder="Rule description"></textarea>
 				</div>
 				<div id="pp-right">
-					<textarea placeholder="Paste valid MediaInfo XML here"></textarea>
+					<textarea id="rule-xml" placeholder="Paste valid MediaInfo XML here"></textarea>
 				</div>
 			</div>
 			<div class="section section-center">
 				<button id="generate-button">Generate</button>
 			</div>
-			<div id="attributes-panel" class="section section-panel section-fill">
+			<div id="attributes-panel" class="section section-panel section-fill disabled-div">
 				<div id="ap-header" class="header">
 					<div class="ap-col">
 						<i class="material-icons">label</i>
