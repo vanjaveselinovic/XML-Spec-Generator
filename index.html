@@ -3,6 +3,8 @@
 	<head>
 		<title>XML Spec Generator</title>
 
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 
 		<script>
@@ -233,11 +235,14 @@
 				text-align: left;
 			}
 
+			.header, .ap-row, #ap-footer {
+				height: 42px;
+				line-height: 42px;
+			}
+
 			.header {
 				background: rgba(0,0,0,0.05);
 				color: grey;
-				height: 50px;
-				line-height: 50px;
 				font-weight: lighter;
 			}
 
@@ -258,8 +263,6 @@
 			}
 
 			.ap-row {
-				height: 50px;
-				line-height: 50px;
 				width: 100%;
 				border-bottom: 1px solid rgba(0,0,0,0.1);
 			}
@@ -283,6 +286,10 @@
 				margin-left: 10px;
 				color: rgba(0,0,0,0.3);
 				cursor: default;
+				-webkit-user-select: none; /* Chrome/Safari/Opera */
+  				-moz-user-select: none; /* Firefox */
+  				-ms-user-select: none; /* Internet Explorer/Edge */
+  				user-select: none;
 			}
 
 			.ap-col-val i:hover {
@@ -291,10 +298,8 @@
 
 			#ap-footer {
 				flex: 0 1 auto;
-				height: 50px;
 				background: hsl(336, 100%, 50%);
 				color: white;
-				line-height: 50px;
 				padding: 0 10px;
 			}
 
