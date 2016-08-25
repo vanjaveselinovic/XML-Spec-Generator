@@ -61,10 +61,6 @@
 
 				/* STEP 2 Build */
 
-				function apRow(tag, val) {
-					return '<div class="ap-row"><div class="ap-col ap-col-tag"><input type="text" value="'+tag+'"></div><div class="ap-col ap-col-val"><input type="text" value="'+val+'"><i class="material-icons no-highlight">delete</i></div></div>';
-				};
-
 				var deletedAttributes = [];
 
 				function getAttributes(oDOM) {
@@ -73,19 +69,37 @@
 					var elements = oDOM.getElementsByTagName("*");
 
 					var element;
-	    			for (var i = 0; i < elements.length; i++) {
+					for (var i = 0; i < elements.length; i++) {
 
-	    				element = $(elements[i])[0];
-	        			if (element.children.length === 0) {
-	        				attributes.push({
-	        					tag: element.tagName,
-	        					val: element.textContent
-	        				});
-	        			}
-	    			}
+						element = $(elements[i])[0];
+						if (element.children.length === 0) {
+							attributes.push({
+								tag: element.tagName,
+								val: element.textContent
+							});
+						}
+					}
 
 					return attributes;
 				}
+
+				function apRow(tag, val) {
+					return '<div class="ap-row"><div class="ap-col ap-col-tag"><input type="text" value="'+tag+'"></div><div class="ap-col ap-col-val"><input type="text" value="'+val+'"><i class="material-icons no-highlight">delete</i></div></div>';
+				}
+
+				function addApRow(tag, val) {
+					$('#ap-main').append(apRow(tag, val));
+					
+					$('.ap-row:last-of-type .ap-col-val i').click(function (ev) {
+						var el = $(ev.target);
+
+						deletedAttributes.push(apRow(el[0].parentElement.previousSibling.children[0].text, el[0].previousSibling.text));
+
+						$(el[0].parentElement.parentElement).remove();
+
+						ga('send', 'event', 'Step 2 Build', 'click', 'remove attribute');
+					});
+				};
 
 				$('#generate-button').click(function () {
 
@@ -101,17 +115,7 @@
 						var attributes = getAttributes(oDOM);
 
 						for(var i = 0; i < attributes.length; i++) {
-							$('#ap-main').append(apRow(attributes[i]['tag'], attributes[i]['val']));
-
-							$('.ap-row:last .ap-col-val i').click(function (ev) {
-								var el = $(ev.target);
-
-								deletedAttributes.push(apRow(el[0].parentElement.previousSibling.children[0].text, el[0].previousSibling.text));
-
-								$(el[0].parentElement.parentElement).remove();
-
-								ga('send', 'event', 'Step 2 Build', 'click', 'remove attribute');
-							});
+							addApRow(attributes[i]['tag'], attributes[i]['val']);
 						}
 
 						ga('send', 'event', 'Step 2 Build', 'generation', 'success');
@@ -132,6 +136,13 @@
 					}
 
 					ga('send', 'event', 'Step 2 Build', 'click', 'generate attributes');
+				});
+
+				$('#ap-footer').click(function () {
+					addApRow('', '');
+
+					var apMainViewport = document.getElementById("ap-main");
+					apMainViewport.scrollTop = apMainViewport.scrollHeight;
 				});
 
 				/* STEP 3 Test */
@@ -166,6 +177,10 @@
 				font-size: inherit !important;
 			}
 
+			.small {
+				font-size: 0.7em;
+			}
+
 			input[type="text"] {
 				border: 0;
 				border-bottom: 1px solid rgba(0,0,0,0.15);
@@ -176,7 +191,18 @@
 				outline: none;
 			}
 
-			.invalid-input {
+			button {
+				border: none;
+				color: white;
+				border-radius: 2px;
+			}
+
+			button:focus {
+				outline: none;
+			}
+
+			button:active {
+				outline: none;
 			}
 
 			input, textarea, keygen, select, button {
@@ -188,6 +214,9 @@
 				opacity: 0.4;
 			}
 
+			.invalid-input {
+			}
+
 			.no-highlight {
 				cursor: default;
 				-webkit-user-select: none; /* Chrome/Safari/Opera */
@@ -197,7 +226,7 @@
 			}
 
 			#sidebar {
-				position: absolute;
+				position: fixed;
 				width: 150px;
 				height: 100%;
 				z-index: 1;
@@ -208,7 +237,7 @@
 				height: 150px;
 				line-height: 150px;
 				text-align: center;
-				font-family: 'Slabo 27px', sans-serif;
+				font-family: 'Slabo 27px', monospace;
 			}
 
 			.sidebar-step {
@@ -241,7 +270,7 @@
 
 			.current-step:after {
 				content: ' ';
-			    position: absolute;
+				position: absolute;
 				right: 0;
 				top: 50%;
 				transform: translate(0, -50%);
@@ -263,8 +292,8 @@
 				text-align: center;
 				margin-top: 30px;
 				position: absolute;
-    			width: 100%;
-    			bottom: 30px;
+				width: 100%;
+				bottom: 30px;
 			}
 
 			#sidebar-bottom span:hover {
@@ -274,10 +303,15 @@
 
 			#wrapper {
 				position: absolute;
-			    width: calc(100% - 150px);
-			    height: 100%;
-			    right: 0;
-			    overflow: auto;
+				width: calc(100% - 150px);
+				height: 100%;
+				right: 0;
+			}
+
+			#wrapper h2 {
+				font-family: 'Slabo 27px', monospace;
+				margin-top: 0;
+				margin-bottom: 0;
 			}
 
 			.page {
@@ -288,11 +322,21 @@
 				padding: 50px 0;
 			}
 
+			.page-scrollable {
+				height: initial;
+			}
+
 			.section {
 				max-width: 600px;
-				width: 100%;
+				width: calc(100% - 40px);
 				margin: 0 auto;
 				flex: 0 1 auto;
+				margin-bottom: 30px !important;
+				box-sizing: content-box;
+			}
+
+			.section:last-of-type {
+				margin-bottom: 0 !important;
 			}
 
 			.section-center {
@@ -304,11 +348,30 @@
 			}
 
 			.section-panel {
-				max-width: 600px;
-				width: 100%;
 				background: white;
-				margin: 0 auto;
 				box-shadow: 0 0 20px rgba(0,0,0,0.1);
+				padding: 20px;
+			}
+
+			.no-padding {
+				padding: 0 !important;
+			}
+
+			.instruction {
+				display: table-row;
+			}
+
+			.instruction h3 {
+				font-size: 0.7em;
+				width: 50px;
+				height: 50px;
+				line-height: 50px;
+				text-align: center;
+				float: left;
+				margin-right: 10px;
+				box-sizing: content-box;
+				text-transform: uppercase;
+				border: 1px solid;
 			}
 
 			#paste-panel {
@@ -334,7 +397,7 @@
 
 			#rule-name {
 				width: 100%;
-				font-size: medium;
+				font-size: 1em;
 				flex: 0 1 auto;
 				margin-bottom: 5px;
 			}
@@ -361,23 +424,8 @@
 				outline: none;
 			}
 
-			button {
-				border: none;
-				color: white;
-				border-radius: 2px;
-			}
-
-			button:focus {
-				outline: none;
-			}
-
-			button:active {
-				outline: none;
-			}
-
 			#generate-button {
-				font-size: large;
-				margin: 20px;
+				font-size: 1em;
 				padding: 0 20px;
 				height: 40px;
 				line-height: 40px;
@@ -393,15 +441,17 @@
 			}
 
 			#attributes-panel {
-			    height: calc(100% - 300px);
-			    min-height: 179px;
+				height: calc(100% - 300px);
+				min-height: 179px;
 				display: flex;
 				flex-flow: column;
+				box-sizing: border-box;
+				padding: 0;
 			}
 
 			.header, .ap-row, #ap-footer {
-				height: 42px;
-				line-height: 42px;
+				height: 40px;
+				line-height: 40px;
 			}
 
 			.header {
@@ -411,9 +461,8 @@
 			}
 
 			.header i, #ap-footer i {
-				height: 42px;
 				position: absolute;
-    			line-height: 42px;
+				line-height: 40px;
 			}
 
 			.header span, #ap-footer span {
@@ -462,60 +511,64 @@
 
 			/* page1 colors */
 
-			.page1 input[type="text"]:focus {
-				border-color: hsl(166, 100%, 55%);
+			.page1 input[type="text"]:focus,
+			.page1 .instruction h3 {
+				border-color: hsl(20, 100%, 55%);
 			}
 
 			.page1 #sidebar {
-				background: hsl(166, 100%, 40%);
+				background: hsl(20, 100%, 40%);
 			}
 
 			.page1 #sidebar-top,
 			.page1 .sidebar-step {
-				border-bottom: 1px solid hsl(166, 100%, 35%);
+				border-bottom: 1px solid hsl(20, 100%, 35%);
 			}
 
 			.page1 .sidebar-step:hover {
-				background: hsl(166, 100%, 38%);
+				background: hsl(20, 100%, 38%);
 			}
 
 			.page1 .sidebar-step h4 {
-				color: hsl(166, 100%, 30%);
+				color: hsl(20, 100%, 30%);
 			}
 
 			.page1 .sidebar-step h3,
 			.page1 #sidebar-bottom,
-			.page1 .ap-col-val i:hover {
-				color: hsl(166, 100%, 50%);
+			.page1 #wrapper h2,
+			.page1 .ap-col-val i:hover,
+			.page1 .instruction h3 {
+				color: hsl(20, 100%, 50%);
 			}
 
 			.page1 .current-step,
 			.page1 .current-step:hover {
-				background: hsl(166, 100%, 35%);
+				background: hsl(20, 100%, 35%);
 			}
 
 			.page1 .current-step h4 {
-				color: hsl(166, 100%, 20%);
+				color: hsl(20, 100%, 20%);
 			}
 
 			.page1 #rule-desc:focus,
 			.page1 #rule-xml:focus {
-				background: hsl(166, 100%, 98%);
+				background: hsl(20, 100%, 98%);
 			}
 
 			.page1 button,
 			.page1 #ap-footer {
-				background: hsl(166, 100%, 50%);
+				background: hsl(20, 100%, 50%);
 			}
 
 			.page1 button:active,
 			.page1 #ap-footer:hover {
-				background: hsl(166, 100%, 45%);
+				background: hsl(20, 100%, 45%);
 			}
 
 			/* page2 colors */
 
-			.page2 input[type="text"]:focus {
+			.page2 input[type="text"]:focus,
+			.page2 .instruction h3 {
 				border-color: hsl(336, 100%, 55%);
 			}
 
@@ -538,7 +591,9 @@
 
 			.page2 .sidebar-step h3,
 			.page2 #sidebar-bottom,
-			.page2 .ap-col-val i:hover {
+			.page2 #wrapper h2,
+			.page2 .ap-col-val i:hover,
+			.page2 .instruction h3 {
 				color: hsl(336, 100%, 50%);
 			}
 
@@ -568,7 +623,8 @@
 
 			/* page3 colors */
 
-			.page3 input[type="text"]:focus {
+			.page3 input[type="text"]:focus,
+			.page3 .instruction h3 {
 				border-color: hsl(43, 100%, 55%);
 			}
 
@@ -591,7 +647,9 @@
 
 			.page3 .sidebar-step h3,
 			.page3 #sidebar-bottom,
-			.page3 .ap-col-val i:hover {
+			.page3 #wrapper h2,
+			.page3 .ap-col-val i:hover,
+			.page3 .instruction h3 {
 				color: hsl(43, 100%, 50%);
 			}
 
@@ -621,7 +679,8 @@
 
 			/* page4 colors */
 
-			.page4 input[type="text"]:focus {
+			.page4 input[type="text"]:focus,
+			.page4 .instruction h3 {
 				border-color: hsl(208, 100%, 55%);
 			}
 
@@ -644,7 +703,9 @@
 
 			.page4 .sidebar-step h3,
 			.page4 #sidebar-bottom,
-			.page4 .ap-col-val i:hover {
+			.page4 #wrapper h2,
+			.page4 .ap-col-val i:hover,
+			.page4 .instruction h3 {
 				color: hsl(208, 100%, 50%);
 			}
 
@@ -697,13 +758,41 @@
 			<div id="sidebar-bottom" class="no-highlight"><span>About</span></div>
 		</div>
 		<div id="wrapper">
-			<div class="page">
-				<div class="section section-panel section-fill">
-					XML Spec Builder
+			<div class="page page-scrollable">
+				<div class="section small">
+					<h2>CloudSpeX</h2>
+					<p>Signiant's CloudSpeX application dramatically lowers rejection rates associated with the receipt of improperly formatted files, and helps to manage the volume and complexity of today's multiplatform delivery specifications.</p>
+					<p>Unlike other solutions that validate format compliance after the file transfer, CloudSpeX ensures that your delivery specification is enforced prior to delivery to save significant time and resources.</p>
+					<p>CloudSpeX is built-in to Signiant's Media Shuttle product.</p>
+				</div>
+				<div class="section section-panel">
+					<h2>Spec Builder</h2>
+					<p>Version 1.0 (current) - Builds <strong>file</strong> rules - which specify the technical data an uploaded file must include.</p>
+					<p class="small">Future Versions - Build <strong>package</strong> rules - which specify how many files and which type an uploaded package of files must contain (e.g. 1 or more .mov files and 5 .jpeg files).</p>
+					<p>
+				</div>
+				<div class="section section-panel">
+					<h2>How to use this tool</h2>
+					<div class="instruction">
+						<h3>Step 1</h3>
+						<p>Upload a small file that conforms to the specification you want to support.</p>
+					</div>
+					<div class="instruction">
+						<h3>Step 2</h3>
+						<p>Edit the .XML</p>
+					</div>
+					<div class="instruction">
+						<h3>Step 3</h3>
+						<p>Test it (with other files that either conform or fail to make your edited specification). If necessary, go back to Step 1 or 2 and make adjustments.</p>
+					</div>
+					<div class="instruction">
+						<h3>Step 4</h3>
+						<p>Submit your completed spec to Signiant.</p>
+					</div>
 				</div>
 			</div>
 			<div class="page">
-				<div id="paste-panel" class="section section-panel">
+				<div id="paste-panel" class="section section-panel no-padding">
 					<div id="pp-left">
 						<input type="text" id="rule-name" placeholder="Rule name"></input>
 						<textarea id="rule-desc" placeholder="Rule description"></textarea>
