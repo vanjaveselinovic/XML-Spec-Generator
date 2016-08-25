@@ -30,6 +30,19 @@
 						el.addClass('current-step');
 					else
 						$(el[0].parentElement).addClass('current-step');
+
+					if (el.is('#step1')) {
+						ga('send', 'event', 'Sidebar', 'click', 'step1');
+					}
+					else if (el.is('#step2')) {
+						ga('send', 'event', 'Sidebar', 'click', 'step2');
+					}
+					else if (el.is('#step3')) {
+						ga('send', 'event', 'Sidebar', 'click', 'step3');
+					}
+					else if (el.is('#step4')) {
+						ga('send', 'event', 'Sidebar', 'click', 'step4');
+					}
 				});
 
 				/* STEP 1 Generate */
@@ -84,18 +97,25 @@
 								deletedAttributes.push(apRow(el[0].parentElement.previousSibling.children[0].text, el[0].previousSibling.text));
 
 								$(el[0].parentElement.parentElement).remove();
+
+								ga('send', 'event', 'Step 2 Build', 'click', 'remove attribute');
 							});
 						}
+
+						ga('send', 'event', 'Step 2 Build', 'generation', 'success');
 					}
 					else {
 						if($('#rule-name').val() === '') {
 							$('#rule-name').addClass('invalid-input');
+							ga('send', 'event', 'Step 2 Build', 'generation', 'failure - no title');
 						}
 						if ($('#rule-desc').val() === '') {
 							$('#rule-desc').addClass('invalid-input');
+							ga('send', 'event', 'Step 2 Build', 'generation', 'failure - no description');
 						}
 						if ($(oDOM.documentElement)[0].outerHTML.indexOf('parsererror') !== -1) {
 							$('#rule-xml').addClass('invalid-input');
+							ga('send', 'event', 'Step 2 Build', 'generation', 'failure - no/invalid xml');
 						}
 					}
 
@@ -242,15 +262,30 @@
 			}
 
 			#sidebar-bottom {
-				font-size: 0.8em;
+				font-size: 0.7em;
 				text-align: center;
 				margin-top: 30px;
+				position: absolute;
+    			width: 100%;
+    			bottom: 30px;
+    			color: hsl(336, 100%, 50%);
+			}
+
+			#sidebar-bottom span:hover {
+				color: white;
+				text-decoration: underline;
+			}
+
+			#wrapper {
+				position: absolute;
+			    width: calc(100% - 150px);
+			    height: 100%;
+			    right: 0;
+			    overflow: auto;
 			}
 
 			.page {
-				width: calc(100% - 150px);
 				height: 100%;
-				position: absolute;
 				right: 0;
 				display: flex;
 				flex-flow: column;
@@ -466,54 +501,60 @@
 	<body>
 		<div id="sidebar">
 			<div id="sidebar-top">Spec Builder</div>
-			<div class="sidebar-step current-step">
+			<div class="sidebar-step current-step" id="step1">
 				<h4>Step 1</h4>
 				<h3>Generate</h3>
 			</div>
-			<div class="sidebar-step">
+			<div class="sidebar-step" id="step2">
 				<h4>Step 2</h4>
 				<h3>Build</h3>
 			</div>
-			<div class="sidebar-step">
+			<div class="sidebar-step" id="step3">
 				<h4>Step 3</h4>
 				<h3>Test</h3>
 			</div>
-			<div class="sidebar-step">
+			<div class="sidebar-step" id="step4">
 				<h4>Step 4</h4>
 				<h3>Submit</h3>
 			</div>
-			<div id="sidebar-bottom">About</div>
+			<div id="sidebar-bottom" class="no-highlight"><span>About</span></div>
 		</div>
-		<div class="page"></div>
-		<div class="page">
-			<div id="paste-panel" class="section section-panel">
-				<div id="pp-left">
-					<input type="text" id="rule-name" placeholder="Rule name" autofocus></input>
-					<textarea id="rule-desc" placeholder="Rule description"></textarea>
-				</div>
-				<div id="pp-right">
-					<textarea id="rule-xml" placeholder="Paste valid MediaInfo XML here"></textarea>
+		<div id="wrapper">
+			<div class="page">
+				<div class="section section-panel section-fill">
+					XML Spec Builder
 				</div>
 			</div>
-			<div class="section section-center">
-				<button id="generate-button">Generate</button>
-			</div>
-			<div id="attributes-panel" class="section section-panel section-fill disabled-div">
-				<div id="ap-header" class="header">
-					<div class="ap-col">
-						<i class="material-icons">label</i>
-						<span>Tag</span>
+			<div class="page">
+				<div id="paste-panel" class="section section-panel">
+					<div id="pp-left">
+						<input type="text" id="rule-name" placeholder="Rule name"></input>
+						<textarea id="rule-desc" placeholder="Rule description"></textarea>
 					</div>
-					<div class="ap-col">
-						<i class="material-icons">border_color</i>
-						<span>Value</span>
+					<div id="pp-right">
+						<textarea id="rule-xml" placeholder="Paste valid MediaInfo XML here"></textarea>
 					</div>
 				</div>
-				<div id="ap-main">
+				<div class="section section-center">
+					<button id="generate-button">Generate</button>
 				</div>
-				<div id="ap-footer">
-					<i class="material-icons">add_circle</i>
-					<span>Add new attribute</span>
+				<div id="attributes-panel" class="section section-panel section-fill disabled-div">
+					<div id="ap-header" class="header">
+						<div class="ap-col">
+							<i class="material-icons">label</i>
+							<span>Tag</span>
+						</div>
+						<div class="ap-col">
+							<i class="material-icons">border_color</i>
+							<span>Value</span>
+						</div>
+					</div>
+					<div id="ap-main">
+					</div>
+					<div id="ap-footer" class="no-highlight">
+						<i class="material-icons">add_circle</i>
+						<span>Add new attribute</span>
+					</div>
 				</div>
 			</div>
 		</div>
