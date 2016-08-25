@@ -63,19 +63,33 @@
 					<h2>How to use this tool</h2>
 					<div class="instruction">
 						<h3>Step 1</h3>
-						<p>Upload a small file that conforms to the specification you want to support.</p>
+						<div class="instruction-text">
+							<p><strong>Generate:</strong> Upload a small file that conforms to the specification you want to support.</p>
+							<p class="small">
+								If you don't want to upload a file, you can skip this step and paste XML directly (XML generated from MediaInfo 0.70.0 ONLY). Example:
+							</p>
+							<p class="small code">
+								mediainfo &lt;/path/ {original file}&gt; --Output=XML --Logfile=&lt;/path/logfilename.xml&gt;
+							</p>
+						</div>
 					</div>
 					<div class="instruction">
 						<h3>Step 2</h3>
-						<p>Edit the .XML</p>
+						<div class="instruction-text">
+							<p><strong>Build:</strong> Edit, add, and/or remove attributes extracted from the MediaInfo XML. The XML can be generated in Step 1 or pasted directly in Step 2.</p>
+						</div>
 					</div>
 					<div class="instruction">
 						<h3>Step 3</h3>
-						<p>Test it (with other files that either conform or fail to make your edited specification). If necessary, go back to Step 1 or 2 and make adjustments.</p>
+						<div class="instruction-text">
+							<p><strong>Test</strong> the spec with other files that either conform or fail your specification. If necessary, go back to Step 1 and/or 2 and make adjustments.</p>
+						</div>
 					</div>
 					<div class="instruction">
 						<h3>Step 4</h3>
-						<p>Submit your completed spec to Signiant.</p>
+						<div class="instruction-text">
+							<p><strong>Submit</strong> your completed spec to Signiant.</p>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -111,12 +125,12 @@
 					</div>
 				</div>
 			</div>
-			<div class="page">
+			<div class="page disabled-div">
 				<div class="section section-panel section-fill">
 					Test your spec
 				</div>
 			</div>
-			<div class="page">
+			<div class="page disabled-div">
 				<div class="section section-panel section-fill">
 					Submit your spec for consideration
 				</div>

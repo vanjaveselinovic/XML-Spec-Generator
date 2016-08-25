@@ -21,6 +21,10 @@ i {
 	font-size: 0.7em;
 }
 
+.code {
+	font-family: monospace;
+}
+
 input[type="text"] {
 	border: 0;
 	border-bottom: 1px solid rgba(0,0,0,0.15);
@@ -214,6 +218,11 @@ input, textarea, keygen, select, button {
 	border: 1px solid;
 }
 
+.instruction-text {
+	width: calc(100% - 65px);
+	float: right;
+}
+
 #paste-panel {
 	height: 150px;
 }
@@ -353,24 +362,24 @@ input, textarea, keygen, select, button {
 
 .page1 input[type="text"]:focus,
 .page1 .instruction h3 {
-	border-color: hsl(20, 100%, 55%);
+	border-color: hsl(208, 100%, 55%);
 }
 
 .page1 #sidebar {
-	background: hsl(20, 100%, 40%);
+	background: hsl(208, 100%, 40%);
 }
 
 .page1 #sidebar-top,
 .page1 .sidebar-step {
-	border-bottom: 1px solid hsl(20, 100%, 35%);
+	border-bottom: 1px solid hsl(208, 100%, 35%);
 }
 
 .page1 .sidebar-step:hover {
-	background: hsl(20, 100%, 38%);
+	background: hsl(208, 100%, 38%);
 }
 
 .page1 .sidebar-step h4 {
-	color: hsl(20, 100%, 30%);
+	color: hsl(208, 100%, 30%);
 }
 
 .page1 .sidebar-step h3,
@@ -378,31 +387,31 @@ input, textarea, keygen, select, button {
 .page1 #wrapper h2,
 .page1 .ap-col-val i:hover,
 .page1 .instruction h3 {
-	color: hsl(20, 100%, 50%);
+	color: hsl(208, 100%, 50%);
 }
 
 .page1 .current-step,
 .page1 .current-step:hover {
-	background: hsl(20, 100%, 35%);
+	background: hsl(208, 100%, 35%);
 }
 
 .page1 .current-step h4 {
-	color: hsl(20, 100%, 20%);
+	color: hsl(208, 100%, 20%);
 }
 
 .page1 #rule-desc:focus,
 .page1 #rule-xml:focus {
-	background: hsl(20, 100%, 98%);
+	background: hsl(208, 100%, 98%);
 }
 
 .page1 button,
 .page1 #ap-footer {
-	background: hsl(20, 100%, 50%);
+	background: hsl(208, 100%, 50%);
 }
 
 .page1 button:active,
 .page1 #ap-footer:hover {
-	background: hsl(20, 100%, 45%);
+	background: hsl(208, 100%, 45%);
 }
 
 /* page2 colors */
@@ -521,24 +530,24 @@ input, textarea, keygen, select, button {
 
 .page4 input[type="text"]:focus,
 .page4 .instruction h3 {
-	border-color: hsl(208, 100%, 55%);
+	border-color: hsl(2088, 100%, 55%);
 }
 
 .page4 #sidebar {
-	background: hsl(208, 100%, 40%);
+	background: hsl(2088, 100%, 40%);
 }
 
 .page4 #sidebar-top,
 .page4 .sidebar-step {
-	border-bottom: 1px solid hsl(208, 100%, 35%);
+	border-bottom: 1px solid hsl(2088, 100%, 35%);
 }
 
 .page4 .sidebar-step:hover {
-	background: hsl(208, 100%, 38%);
+	background: hsl(2088, 100%, 38%);
 }
 
 .page4 .sidebar-step h4 {
-	color: hsl(208, 100%, 30%);
+	color: hsl(2088, 100%, 30%);
 }
 
 .page4 .sidebar-step h3,
@@ -546,29 +555,29 @@ input, textarea, keygen, select, button {
 .page4 #wrapper h2,
 .page4 .ap-col-val i:hover,
 .page4 .instruction h3 {
-	color: hsl(208, 100%, 50%);
+	color: hsl(2088, 100%, 50%);
 }
 
 .page4 .current-step,
 .page4 .current-step:hover {
-	background: hsl(208, 100%, 35%);
+	background: hsl(2088, 100%, 35%);
 }
 
 .page4 .current-step h4 {
-	color: hsl(208, 100%, 20%);
+	color: hsl(2088, 100%, 20%);
 }
 
 .page4 #rule-desc:focus,
 .page4 #rule-xml:focus {
-	background: hsl(208, 100%, 98%);
+	background: hsl(2088, 100%, 98%);
 }
 
 .page4 button,
 .page4 #ap-footer {
-	background: hsl(208, 100%, 50%);
+	background: hsl(2088, 100%, 50%);
 }
 
 .page4 button:active,
 .page4 #ap-footer:hover {
-	background: hsl(208, 100%, 45%);
+	background: hsl(2088, 100%, 45%);
 }
