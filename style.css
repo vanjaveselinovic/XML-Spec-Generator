@@ -242,6 +242,7 @@ input, textarea, keygen, select, button {
 
 #pp-right {
 	width: 65%;
+	position: relative;
 }
 
 #rule-name {
@@ -271,6 +272,29 @@ input, textarea, keygen, select, button {
 
 #rule-xml:focus {
 	outline: none;
+}
+
+#rule-xml:focus ~ #pp-upload {
+	display: none;
+}
+
+#pp-upload {
+	position: absolute;
+    width: 100%;
+    height: 45%;
+    bottom: 0;
+    right: 0;
+    font-size: 0.7em;
+    text-align: center;
+}
+
+.pp-divider {
+	font-size: 0.6em;
+	opacity: 0.3;
+}
+
+#browse-button {
+	margin-left: 5px;
 }
 
 #generate-button {
