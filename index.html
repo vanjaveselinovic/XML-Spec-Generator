@@ -31,16 +31,28 @@
 					else
 						$(el[0].parentElement).addClass('current-step');
 
-					if (el.is('#step1')) {
+					if (el.is('#step1') || $(el[0].parentElement).is('#step1')) {
+						$('body').removeClass('page2 page3 page4');
+						$('body').addClass('page1');
+
 						ga('send', 'event', 'Sidebar', 'click', 'step1');
 					}
-					else if (el.is('#step2')) {
+					else if (el.is('#step2') || $(el[0].parentElement).is('#step2')) {
+						$('body').removeClass('page1 page3 page4');
+						$('body').addClass('page2');
+
 						ga('send', 'event', 'Sidebar', 'click', 'step2');
 					}
-					else if (el.is('#step3')) {
+					else if (el.is('#step3') || $(el[0].parentElement).is('#step3')) {
+						$('body').removeClass('page1 page2 page4');
+						$('body').addClass('page3');
+
 						ga('send', 'event', 'Sidebar', 'click', 'step3');
 					}
-					else if (el.is('#step4')) {
+					else if (el.is('#step4') || $(el[0].parentElement).is('#step4')) {
+						$('body').removeClass('page1 page2 page3');
+						$('body').addClass('page4');
+
 						ga('send', 'event', 'Sidebar', 'click', 'step4');
 					}
 				});
@@ -162,7 +174,6 @@
 
 			input[type="text"]:focus {
 				outline: none;
-				border-color: hsl(336, 100%, 55%);
 			}
 
 			.invalid-input {
@@ -189,21 +200,18 @@
 				position: absolute;
 				width: 150px;
 				height: 100%;
-				background: hsl(336, 100%, 40%);
 				z-index: 1;
 				color: white;
 			}
 
 			#sidebar-top {
 				height: 150px;
-				border-bottom: 1px solid hsl(336, 100%, 35%);
 				line-height: 150px;
 				text-align: center;
 				font-family: 'Slabo 27px', sans-serif;
 			}
 
 			.sidebar-step {
-				border-bottom: 1px solid hsl(336, 100%, 35%);
 				text-align: center;
 				padding: 20px 0;
 				position: relative;
@@ -212,10 +220,6 @@
   				-moz-user-select: none; /* Firefox */
   				-ms-user-select: none; /* Internet Explorer/Edge */
   				user-select: none;
-			}
-
-			.sidebar-step:hover {
-				background: hsl(336, 100%, 38%);
 			}
 
 			.sidebar-step h4, .sidebar-step h3 {
@@ -229,16 +233,10 @@
 				text-transform: uppercase;
 				font-size: 0.8em;
 				font-family: 'Slabo 27px', monospace;
-				color: hsl(336, 100%, 30%);
 			}
 
 			.sidebar-step h3 {
 				margin-top: 5px;
-				color: hsl(336, 100%, 50%);
-			}
-
-			.current-step, .current-step:hover {
-				background: hsl(336, 100%, 35%);
 			}
 
 			.current-step:after {
@@ -253,12 +251,11 @@
 			}
 
 			.current-step h4 {
-				color: hsl(336, 100%, 20%);
 				font-weight: bold;
 			}
 
 			.current-step h3 {
-				color: white;
+				color: white !important;
 			}
 
 			#sidebar-bottom {
@@ -268,7 +265,6 @@
 				position: absolute;
     			width: 100%;
     			bottom: 30px;
-    			color: hsl(336, 100%, 50%);
 			}
 
 			#sidebar-bottom span:hover {
@@ -305,17 +301,6 @@
 
 			.section-fill {
 				flex: 1 1 auto;
-			}
-
-			.section-header {
-				background: hsl(336, 100%, 50%);
-				height: 100px;
-				line-height: 50px;
-				padding: 10px;
-				text-align: center;
-				color: white;
-				font-size: 1.4em;
-				box-sizing: content-box;
 			}
 
 			.section-panel {
@@ -363,7 +348,6 @@
 
 			#rule-desc:focus {
 				outline: none;
-				background: hsl(336, 100%, 98%);
 			}
 
 			#rule-xml {
@@ -375,11 +359,9 @@
 
 			#rule-xml:focus {
 				outline: none;
-				background: hsl(336, 100%, 98%);
 			}
 
 			button {
-				background: hsl(336, 100%, 50%);
 				border: none;
 				color: white;
 				border-radius: 2px;
@@ -391,7 +373,6 @@
 
 			button:active {
 				outline: none;
-				background: hsl(336, 100%, 45%);
 			}
 
 			#generate-button {
@@ -473,32 +454,228 @@
 				color: rgba(0,0,0,0.3);
 			}
 
-			.ap-col-val i:hover {
-				color: hsl(336, 100%, 50%);
-			}
-
 			#ap-footer {
 				flex: 0 1 auto;
-				background: hsl(336, 100%, 50%);
 				color: white;
 				padding: 0 10px;
 			}
 
-			#ap-footer:hover {
+			/* page1 colors */
+
+			.page1 input[type="text"]:focus {
+				border-color: hsl(166, 100%, 55%);
+			}
+
+			.page1 #sidebar {
+				background: hsl(166, 100%, 40%);
+			}
+
+			.page1 #sidebar-top,
+			.page1 .sidebar-step {
+				border-bottom: 1px solid hsl(166, 100%, 35%);
+			}
+
+			.page1 .sidebar-step:hover {
+				background: hsl(166, 100%, 38%);
+			}
+
+			.page1 .sidebar-step h4 {
+				color: hsl(166, 100%, 30%);
+			}
+
+			.page1 .sidebar-step h3,
+			.page1 #sidebar-bottom,
+			.page1 .ap-col-val i:hover {
+				color: hsl(166, 100%, 50%);
+			}
+
+			.page1 .current-step,
+			.page1 .current-step:hover {
+				background: hsl(166, 100%, 35%);
+			}
+
+			.page1 .current-step h4 {
+				color: hsl(166, 100%, 20%);
+			}
+
+			.page1 #rule-desc:focus,
+			.page1 #rule-xml:focus {
+				background: hsl(166, 100%, 98%);
+			}
+
+			.page1 button,
+			.page1 #ap-footer {
+				background: hsl(166, 100%, 50%);
+			}
+
+			.page1 button:active,
+			.page1 #ap-footer:hover {
+				background: hsl(166, 100%, 45%);
+			}
+
+			/* page2 colors */
+
+			.page2 input[type="text"]:focus {
+				border-color: hsl(336, 100%, 55%);
+			}
+
+			.page2 #sidebar {
+				background: hsl(336, 100%, 40%);
+			}
+
+			.page2 #sidebar-top,
+			.page2 .sidebar-step {
+				border-bottom: 1px solid hsl(336, 100%, 35%);
+			}
+
+			.page2 .sidebar-step:hover {
+				background: hsl(336, 100%, 38%);
+			}
+
+			.page2 .sidebar-step h4 {
+				color: hsl(336, 100%, 30%);
+			}
+
+			.page2 .sidebar-step h3,
+			.page2 #sidebar-bottom,
+			.page2 .ap-col-val i:hover {
+				color: hsl(336, 100%, 50%);
+			}
+
+			.page2 .current-step,
+			.page2 .current-step:hover {
+				background: hsl(336, 100%, 35%);
+			}
+
+			.page2 .current-step h4 {
+				color: hsl(336, 100%, 20%);
+			}
+
+			.page2 #rule-desc:focus,
+			.page2 #rule-xml:focus {
+				background: hsl(336, 100%, 98%);
+			}
+
+			.page2 button,
+			.page2 #ap-footer {
+				background: hsl(336, 100%, 50%);
+			}
+
+			.page2 button:active,
+			.page2 #ap-footer:hover {
 				background: hsl(336, 100%, 45%);
 			}
 
-			#export-panel {
-				width: 35%;
+			/* page3 colors */
+
+			.page3 input[type="text"]:focus {
+				border-color: hsl(43, 100%, 55%);
 			}
 
-			#export-panel .header {
-				padding: 0 10px;
+			.page3 #sidebar {
+				background: hsl(43, 100%, 40%);
 			}
+
+			.page3 #sidebar-top,
+			.page3 .sidebar-step {
+				border-bottom: 1px solid hsl(43, 100%, 35%);
+			}
+
+			.page3 .sidebar-step:hover {
+				background: hsl(43, 100%, 38%);
+			}
+
+			.page3 .sidebar-step h4 {
+				color: hsl(43, 100%, 30%);
+			}
+
+			.page3 .sidebar-step h3,
+			.page3 #sidebar-bottom,
+			.page3 .ap-col-val i:hover {
+				color: hsl(43, 100%, 50%);
+			}
+
+			.page3 .current-step,
+			.page3 .current-step:hover {
+				background: hsl(43, 100%, 35%);
+			}
+
+			.page3 .current-step h4 {
+				color: hsl(43, 100%, 20%);
+			}
+
+			.page3 #rule-desc:focus,
+			.page3 #rule-xml:focus {
+				background: hsl(43, 100%, 98%);
+			}
+
+			.page3 button,
+			.page3 #ap-footer {
+				background: hsl(43, 100%, 50%);
+			}
+
+			.page3 button:active,
+			.page3 #ap-footer:hover {
+				background: hsl(43, 100%, 45%);
+			}
+
+			/* page4 colors */
+
+			.page4 input[type="text"]:focus {
+				border-color: hsl(208, 100%, 55%);
+			}
+
+			.page4 #sidebar {
+				background: hsl(208, 100%, 40%);
+			}
+
+			.page4 #sidebar-top,
+			.page4 .sidebar-step {
+				border-bottom: 1px solid hsl(208, 100%, 35%);
+			}
+
+			.page4 .sidebar-step:hover {
+				background: hsl(208, 100%, 38%);
+			}
+
+			.page4 .sidebar-step h4 {
+				color: hsl(208, 100%, 30%);
+			}
+
+			.page4 .sidebar-step h3,
+			.page4 #sidebar-bottom,
+			.page4 .ap-col-val i:hover {
+				color: hsl(208, 100%, 50%);
+			}
+
+			.page4 .current-step,
+			.page4 .current-step:hover {
+				background: hsl(208, 100%, 35%);
+			}
+
+			.page4 .current-step h4 {
+				color: hsl(208, 100%, 20%);
+			}
+
+			.page4 #rule-desc:focus,
+			.page4 #rule-xml:focus {
+				background: hsl(208, 100%, 98%);
+			}
+
+			.page4 button,
+			.page4 #ap-footer {
+				background: hsl(208, 100%, 50%);
+			}
+
+			.page4 button:active,
+			.page4 #ap-footer:hover {
+				background: hsl(208, 100%, 45%);
+			}
+
 		</style>
 	</head>
 
-	<body>
+	<body class="page1">
 		<div id="sidebar">
 			<div id="sidebar-top">Spec Builder</div>
 			<div class="sidebar-step current-step" id="step1">
@@ -555,6 +732,16 @@
 						<i class="material-icons">add_circle</i>
 						<span>Add new attribute</span>
 					</div>
+				</div>
+			</div>
+			<div class="page">
+				<div class="section section-panel section-fill">
+					Test your spec
+				</div>
+			</div>
+			<div class="page">
+				<div class="section section-panel section-fill">
+					Submit your spec for consideration
 				</div>
 			</div>
 		</div>
