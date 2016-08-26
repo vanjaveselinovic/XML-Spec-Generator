@@ -17,11 +17,19 @@ $(document).ready(function () {
 			$('body').removeClass('page2 page3 page4');
 			$('body').addClass('page1');
 
+			$('html, body, #wrapper').animate({
+        		scrollTop: $("#page1").offset().top
+    		}, 500);
+
 			ga('send', 'event', 'Sidebar', 'click', 'step1');
 		}
 		else if (el.is('#step2') || $(el[0].parentElement).is('#step2')) {
 			$('body').removeClass('page1 page3 page4');
 			$('body').addClass('page2');
+
+			$('html, body, #wrapper').animate({
+        		scrollTop: $("#page2").offset().top
+    		}, 500);
 
 			ga('send', 'event', 'Sidebar', 'click', 'step2');
 		}
@@ -29,11 +37,19 @@ $(document).ready(function () {
 			$('body').removeClass('page1 page2 page4');
 			$('body').addClass('page3');
 
+			$('html, body, #wrapper').animate({
+        		scrollTop: $("#page3").offset().top
+    		}, 500);
+
 			ga('send', 'event', 'Sidebar', 'click', 'step3');
 		}
 		else if (el.is('#step4') || $(el[0].parentElement).is('#step4')) {
 			$('body').removeClass('page1 page2 page3');
 			$('body').addClass('page4');
+
+			$('html, body, #wrapper').animate({
+        		scrollTop: $("#page4").offset().top
+    		}, 500);
 
 			ga('send', 'event', 'Sidebar', 'click', 'step4');
 		}
