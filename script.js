@@ -57,6 +57,133 @@ $(document).ready(function () {
 
 	/* STEP 1 Generate */
 
+	var CHUNK_SIZE = 5 * 1024 * 1024;
+	var miLib, mi;
+	var processing = false;
+
+
+	function parseFile(file) {
+		if (processing) {
+			return;
+		}
+		processing = true;
+
+		var fileSize = file.size, offset = 0, state = 0, seek = null;
+		var statusInterval;
+
+		mi.open_buffer_init(fileSize, offset);
+
+		var processChunk = function(e) {
+			var l;
+			if (e.target.error === null) {
+				var chunk = new Uint8Array(e.target.result);
+				l = chunk.length;
+				state = mi.open_buffer_continue(chunk, l);
+				offset += l;
+				chunk = null;
+			} else {
+				var msg = 'An error happened reading your file!';
+				console.err(msg, e.target.error);
+				processing = false;
+				alert(msg);
+				return;
+			}
+			// bit 4 set means finalized
+			if ((state >> 3) % 2 !== 0 || offset >= fileSize) {
+				var result = mi.inform();
+				mi.close();
+				processing = false;
+				return result;
+			}
+			seek(l);
+		};
+
+		seek = function(length) {
+			if (processing) {
+				var r = new FileReader();
+				var blob = file.slice(offset, length + offset);
+				r.onload = processChunk;
+				r.readAsArrayBuffer(blob);
+			}
+			else {
+				mi.close();
+				processingDone();
+			}
+		};
+
+		//print status
+		statusInterval = window.setInterval(function() {
+			$statuspercent.text((offset / fileSize * 100).toFixed(0));
+		}, 1000);
+
+		//start
+		seek(CHUNK_SIZE);
+
+		_paq.push(['trackEvent', 'File', 'AnalysisRun', file.name]);
+	}
+
+	var miLib = MediaInfo(function() {
+		console.debug('MediaInfo ready');
+		$loader.fadeOut(function() {
+			$dropcontrols.fadeIn();
+
+	    	window['miLib'] = miLib; // debug
+	    	mi = new miLib.MediaInfo();
+
+    		$('#generate-button').click(function () {
+
+				var oParser = new DOMParser();
+				//var oDOM = oParser.parseFromString($('#rule-xml').val().trim(), "text/xml");
+				
+
+				var uploadEl = $('#pp-file').get(0);
+	    	  	if (uploadEl.files.length > 0) {
+	      			var oDOM = oParser.parseFromString(parseFile(uploadEl.files[0]));
+	  	    	}
+
+	  	    	console.log(oDOM);
+
+				if ($('#rule-name').val() !== ''
+					&& $('#rule-desc').val() !== ''
+					&& $(oDOM.documentElement)[0].outerHTML.indexOf('parsererror') === -1) {
+
+					$('#attributes-panel').removeClass('disabled-div');
+
+					var attributes = getAttributes(oDOM);
+
+					for(var i = 0; i < attributes.length; i++) {
+						addApRow(attributes[i]['tag'], attributes[i]['val']);
+					}
+
+					ga('send', 'event', 'Step 2 Build', 'generation', 'success');
+				}
+				else {
+					if($('#rule-name').val() === '') {
+						$('#rule-name').addClass('invalid-input');
+						ga('send', 'event', 'Step 2 Build', 'generation', 'failure - no title');
+					}
+					if ($('#rule-desc').val() === '') {
+						$('#rule-desc').addClass('invalid-input');
+						ga('send', 'event', 'Step 2 Build', 'generation', 'failure - no description');
+					}
+					if ($(oDOM.documentElement)[0].outerHTML.indexOf('parsererror') !== -1) {
+						$('#rule-xml').addClass('invalid-input');
+						ga('send', 'event', 'Step 2 Build', 'generation', 'failure - no/invalid xml');
+					}
+				}
+
+				ga('send', 'event', 'Step 2 Build', 'click', 'generate attributes');
+			});
+
+	      	$('').on('change', function(e) {
+		      	var el = $fileinput.get(0);
+	    	  	if (el.files.length > 0) {
+	      			parseFile(el.files[0]);
+	  	    	}
+	    	});
+	  	});
+	});
+
 	$('#rule-xml').change(function () {
 		if($('#rule-xml').val() !== '') {
 			$('#pp-upload').css('height', '0px');
@@ -115,43 +242,6 @@ $(document).ready(function () {
 			ga('send', 'event', 'Step 2 Build', 'click', 'remove attribute');
 		});
 	};
-
-	$('#generate-button').click(function () {
-
-		var oParser = new DOMParser();
-		var oDOM = oParser.parseFromString($('#rule-xml').val().trim(), "text/xml");
-
-		if ($('#rule-name').val() !== ''
-			&& $('#rule-desc').val() !== ''
-			&& $(oDOM.documentElement)[0].outerHTML.indexOf('parsererror') === -1) {
-
-			$('#attributes-panel').removeClass('disabled-div');
-
-		var attributes = getAttributes(oDOM);
-
-		for(var i = 0; i < attributes.length; i++) {
-			addApRow(attributes[i]['tag'], attributes[i]['val']);
-		}
-
-		ga('send', 'event', 'Step 2 Build', 'generation', 'success');
-	}
-	else {
-		if($('#rule-name').val() === '') {
-			$('#rule-name').addClass('invalid-input');
-			ga('send', 'event', 'Step 2 Build', 'generation', 'failure - no title');
-		}
-		if ($('#rule-desc').val() === '') {
-			$('#rule-desc').addClass('invalid-input');
-			ga('send', 'event', 'Step 2 Build', 'generation', 'failure - no description');
-		}
-		if ($(oDOM.documentElement)[0].outerHTML.indexOf('parsererror') !== -1) {
-			$('#rule-xml').addClass('invalid-input');
-			ga('send', 'event', 'Step 2 Build', 'generation', 'failure - no/invalid xml');
-		}
-	}
-
-	ga('send', 'event', 'Step 2 Build', 'click', 'generate attributes');
-	});
 
 	$('#ap-footer').click(function () {
 		addApRow('', '');
