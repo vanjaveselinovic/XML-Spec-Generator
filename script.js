@@ -123,32 +123,15 @@ $(document).ready(function () {
 		seek(CHUNK_SIZE);
 	}
 
-	var miLib = MediaInfo(function() {
-		console.debug('MediaInfo ready');
+	function generateDone(xmlFromMediaInfo) {
+		var oParser = new DOMParser();
+		var oDOM = ''; //oParser.parseFromString($('#rule-xml').val().trim(), "text/xml");	
 
-    	window['miLib'] = miLib; // debug
-    	mi = new miLib.MediaInfo();
+  	    oDOM = oParser.parseFromString(xmlFromMediaInfo, "text/xml");
 
-		$('#generate-button').click(function () {
-
-			var oParser = new DOMParser();
-			var oDOM = ''; //oParser.parseFromString($('#rule-xml').val().trim(), "text/xml");
-			
-
-			var uploadEl = $('#pp-file').get(0);
-			var xmlFromMediaInfo = '';
-
-    	  	if (uploadEl.files.length > 0) {
-    	  		xmlFromMediaInfo = parseFile(uploadEl.files[0]);
-    	  		console.log(xmlFromMediaInfo);
-    	  		
-  	    		oDOM = oParser.parseFromString(xmlFromMediaInfo, "text/xml");
-  	    		console.log(oDOM);
-  	    	}
-
-			if ($('#rule-name').val() !== ''
-				&& $('#rule-desc').val() !== ''
-				&& $(oDOM.documentElement)[0].outerHTML.indexOf('parsererror') === -1) {
+  	    if ($('#rule-name').val() !== ''
+			&& $('#rule-desc').val() !== ''
+			&& $(oDOM.documentElement)[0].outerHTML.indexOf('parsererror') === -1) {
 
 				$('#attributes-panel').removeClass('disabled-div');
 
@@ -174,16 +157,25 @@ $(document).ready(function () {
 					ga('send', 'event', 'Step 2 Build', 'generation', 'failure - no/invalid xml');
 				}
 			}
+	}
+
+	var miLib = MediaInfo(function() {
+		console.debug('MediaInfo ready');
+
+    	window['miLib'] = miLib; // debug
+    	mi = new miLib.MediaInfo();
+
+		$('#generate-button').click(function () {
+
+			var uploadEl = $('#pp-file').get(0);
+			var xmlFromMediaInfo = '';
+
+    	  	if (uploadEl.files.length > 0) {
+    	  		parseFile(uploadEl.files[0]);
+  	    	}
 
 			ga('send', 'event', 'Step 2 Build', 'click', 'generate attributes');
 		});
-
-      	$('').on('change', function(e) {
-	      	var el = $fileinput.get(0);
-    	  	if (el.files.length > 0) {
-      			parseFile(el.files[0]);
-  	    	}
-    	});
 	});
 
 	$('#rule-xml').change(function () {
