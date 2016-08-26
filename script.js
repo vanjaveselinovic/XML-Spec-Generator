@@ -176,7 +176,7 @@ $(document).ready(function () {
     	window['miLib'] = miLib; // debug
     	mi = new miLib.MediaInfo();
 
-    	$('#generate-button').attr('disabled', 'false');
+    	$('#generate-button').prop('disabled', false);
 	});
 
 	$('#generate-button').click(function () {
