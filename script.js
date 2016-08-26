@@ -85,6 +85,7 @@ $(document).ready(function () {
 				var msg = 'An error happened reading your file!';
 				console.err(msg, e.target.error);
 				processing = false;
+				clearInterval(statusInterval);
 				alert(msg);
 				return;
 			}
@@ -93,6 +94,7 @@ $(document).ready(function () {
 				var result = mi.inform();
 				mi.close();
 				processing = false;
+				clearInterval(statusInterval);
 				return result;
 			}
 			seek(l);
@@ -107,7 +109,8 @@ $(document).ready(function () {
 			}
 			else {
 				mi.close();
-				processingDone();
+				processing = false;
+				clearInterval(statusInterval);
 			}
 		};
 
