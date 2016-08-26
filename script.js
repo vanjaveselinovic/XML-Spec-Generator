@@ -124,64 +124,61 @@ $(document).ready(function () {
 
 	var miLib = MediaInfo(function() {
 		console.debug('MediaInfo ready');
-		$loader.fadeOut(function() {
-			$dropcontrols.fadeIn();
 
-	    	window['miLib'] = miLib; // debug
-	    	mi = new miLib.MediaInfo();
+    	window['miLib'] = miLib; // debug
+    	mi = new miLib.MediaInfo();
 
-    		$('#generate-button').click(function () {
+		$('#generate-button').click(function () {
 
-				var oParser = new DOMParser();
-				//var oDOM = oParser.parseFromString($('#rule-xml').val().trim(), "text/xml");
-				
+			var oParser = new DOMParser();
+			//var oDOM = oParser.parseFromString($('#rule-xml').val().trim(), "text/xml");
+			
 
-				var uploadEl = $('#pp-file').get(0);
-	    	  	if (uploadEl.files.length > 0) {
-	      			var oDOM = oParser.parseFromString(parseFile(uploadEl.files[0]));
-	  	    	}
+			var uploadEl = $('#pp-file').get(0);
+    	  	if (uploadEl.files.length > 0) {
+      			var oDOM = oParser.parseFromString(parseFile(uploadEl.files[0]));
+  	    	}
 
-	  	    	console.log(oDOM);
+  	    	console.log(oDOM);
 
-				if ($('#rule-name').val() !== ''
-					&& $('#rule-desc').val() !== ''
-					&& $(oDOM.documentElement)[0].outerHTML.indexOf('parsererror') === -1) {
+			if ($('#rule-name').val() !== ''
+				&& $('#rule-desc').val() !== ''
+				&& $(oDOM.documentElement)[0].outerHTML.indexOf('parsererror') === -1) {
 
-					$('#attributes-panel').removeClass('disabled-div');
+				$('#attributes-panel').removeClass('disabled-div');
 
-					var attributes = getAttributes(oDOM);
+				var attributes = getAttributes(oDOM);
 
-					for(var i = 0; i < attributes.length; i++) {
-						addApRow(attributes[i]['tag'], attributes[i]['val']);
-					}
-
-					ga('send', 'event', 'Step 2 Build', 'generation', 'success');
-				}
-				else {
-					if($('#rule-name').val() === '') {
-						$('#rule-name').addClass('invalid-input');
-						ga('send', 'event', 'Step 2 Build', 'generation', 'failure - no title');
-					}
-					if ($('#rule-desc').val() === '') {
-						$('#rule-desc').addClass('invalid-input');
-						ga('send', 'event', 'Step 2 Build', 'generation', 'failure - no description');
-					}
-					if ($(oDOM.documentElement)[0].outerHTML.indexOf('parsererror') !== -1) {
-						$('#rule-xml').addClass('invalid-input');
-						ga('send', 'event', 'Step 2 Build', 'generation', 'failure - no/invalid xml');
-					}
+				for(var i = 0; i < attributes.length; i++) {
+					addApRow(attributes[i]['tag'], attributes[i]['val']);
 				}
 
-				ga('send', 'event', 'Step 2 Build', 'click', 'generate attributes');
-			});
+				ga('send', 'event', 'Step 2 Build', 'generation', 'success');
+			}
+			else {
+				if($('#rule-name').val() === '') {
+					$('#rule-name').addClass('invalid-input');
+					ga('send', 'event', 'Step 2 Build', 'generation', 'failure - no title');
+				}
+				if ($('#rule-desc').val() === '') {
+					$('#rule-desc').addClass('invalid-input');
+					ga('send', 'event', 'Step 2 Build', 'generation', 'failure - no description');
+				}
+				if ($(oDOM.documentElement)[0].outerHTML.indexOf('parsererror') !== -1) {
+					$('#rule-xml').addClass('invalid-input');
+					ga('send', 'event', 'Step 2 Build', 'generation', 'failure - no/invalid xml');
+				}
+			}
 
-	      	$('').on('change', function(e) {
-		      	var el = $fileinput.get(0);
-	    	  	if (el.files.length > 0) {
-	      			parseFile(el.files[0]);
-	  	    	}
-	    	});
-	  	});
+			ga('send', 'event', 'Step 2 Build', 'click', 'generate attributes');
+		});
+
+      	$('').on('change', function(e) {
+	      	var el = $fileinput.get(0);
+    	  	if (el.files.length > 0) {
+      			parseFile(el.files[0]);
+  	    	}
+    	});
 	});
 
 	$('#rule-xml').change(function () {
