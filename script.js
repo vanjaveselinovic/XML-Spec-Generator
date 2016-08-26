@@ -170,14 +170,14 @@ $(document).ready(function () {
 		ga('send', 'event', 'Step 2 Build', 'generation', 'success with file');
 	}
 
-	/*var miLib = MediaInfo(function() {
+	var miLib = MediaInfo(function() {
 		console.debug('MediaInfo ready');
 
     	window['miLib'] = miLib; // debug
     	mi = new miLib.MediaInfo();
 
     	$('#generate-button').attr('disabled', 'false');
-	});*/
+	});
 
 	$('#generate-button').click(function () {
 		if ($('#rule-name').val() !== ''
