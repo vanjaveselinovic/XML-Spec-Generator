@@ -185,7 +185,7 @@ $(document).ready(function () {
 			&& ($('#pp-file')[0].files.length > 0
 				|| $('#rule-xml').val() !== '')) {
 
-			if ($('#rule-xml').val !== '') {
+			if ($('#rule-xml').val() !== '') {
 				oDOM = oParser.parseFromString($('#rule-xml').val(), "text/xml");
 
 				if($(oDOM.documentElement)[0].outerHTML.indexOf('parsererror') === -1){
