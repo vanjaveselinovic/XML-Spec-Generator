@@ -204,8 +204,6 @@ $(document).ready(function () {
 				}
 			}
 			else {
-				var xmlFromMediaInfo = '';
-
 			  	if ($('#pp-file')[0].files.length > 0) {
 			  		parseFile($('#pp-file')[0].files[0]);
 			    }
