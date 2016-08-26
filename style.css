@@ -49,6 +49,22 @@ button:active {
 	outline: none;
 }
 
+input[type="file"] {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+.upload-button {
+	padding: 2px 5px;
+	border-radius: 2px;
+	color: white;
+	margin-left: 5px;
+}
+
 input, textarea, keygen, select, button {
 	font-family: 'Open Sans', sans-serif;
 }
@@ -240,11 +256,6 @@ input, textarea, keygen, select, button {
 	flex-flow: column;
 }
 
-#pp-right {
-	width: 65%;
-	position: relative;
-}
-
 #rule-name {
 	width: 100%;
 	font-size: 1em;
@@ -263,38 +274,65 @@ input, textarea, keygen, select, button {
 	outline: none;
 }
 
-#rule-xml {
-	width: 100%;
-	height: 100%;
-	border: none;
-	font-family: monospace;
-}
-
-#rule-xml:focus {
-	outline: none;
-}
-
-#rule-xml:focus ~ #pp-upload {
-	display: none;
+#pp-right {
+	width: 65%;
+	position: relative;
+	display: flex;
+	flex-flow: column-reverse;
 }
 
 #pp-upload {
-	position: absolute;
-    width: 100%;
-    height: 45%;
-    bottom: 0;
-    right: 0;
     font-size: 0.7em;
     text-align: center;
+    height: 65px;
+    width: 100%;
+    opacity: 1;
+    transition: height 0.2s, opacity 0.2s;
+}
+
+#pp-upload-text {
+	display: inline-block;
+	margin-top: 2px;
+}
+
+.pp-divider:before, .pp-divider:after {
+	content: '';
+	width: 100px;
+	height: 1px;
+	background: #555;
+	display: inline-block;
+	margin: 0 5px;
+	vertical-align: middle;
+}
+
+#pp-selected-file {
+	padding: 8px 0 4px 0;
+	font-size: 1.2em;
 }
 
 .pp-divider {
 	font-size: 0.6em;
 	opacity: 0.3;
+	margin-bottom: 5px;
 }
 
-#browse-button {
-	margin-left: 5px;
+#rule-xml {
+	border: none;
+	font-family: monospace;
+	height: 65px;
+	width: 100%;
+	transition: height 0.2s;
+	z-index: 1;
+}
+
+#rule-xml:focus {
+	outline: none;
+	height: 130px !important;
+}
+
+#rule-xml:focus + #pp-upload {
+	height: 0px !important;
+	opacity: 0;
 }
 
 #generate-button {
@@ -410,7 +448,8 @@ input, textarea, keygen, select, button {
 .page1 #sidebar-bottom,
 .page1 #wrapper h2,
 .page1 .ap-col-val i:hover,
-.page1 .instruction h3 {
+.page1 .instruction h3,
+.page1 .selected-file {
 	color: hsl(208, 100%, 50%);
 }
 
@@ -429,12 +468,14 @@ input, textarea, keygen, select, button {
 }
 
 .page1 button,
-.page1 #ap-footer {
+.page1 #ap-footer,
+.page1 .upload-button {
 	background: hsl(208, 100%, 50%);
 }
 
 .page1 button:active,
-.page1 #ap-footer:hover {
+.page1 #ap-footer:hover,
+.page1 input[type="file"]:active + .upload-button {
 	background: hsl(208, 100%, 45%);
 }
 
@@ -466,7 +507,8 @@ input, textarea, keygen, select, button {
 .page2 #sidebar-bottom,
 .page2 #wrapper h2,
 .page2 .ap-col-val i:hover,
-.page2 .instruction h3 {
+.page2 .instruction h3,
+.page2 .selected-file {
 	color: hsl(336, 100%, 50%);
 }
 
@@ -485,12 +527,14 @@ input, textarea, keygen, select, button {
 }
 
 .page2 button,
-.page2 #ap-footer {
+.page2 #ap-footer,
+.page2 .upload-button {
 	background: hsl(336, 100%, 50%);
 }
 
 .page2 button:active,
-.page2 #ap-footer:hover {
+.page2 #ap-footer:hover,
+.page2 input[type="file"]:active + .upload-button {
 	background: hsl(336, 100%, 45%);
 }
 
@@ -522,7 +566,8 @@ input, textarea, keygen, select, button {
 .page3 #sidebar-bottom,
 .page3 #wrapper h2,
 .page3 .ap-col-val i:hover,
-.page3 .instruction h3 {
+.page3 .instruction h3,
+.page3 .selected-file {
 	color: hsl(43, 100%, 50%);
 }
 
@@ -541,12 +586,14 @@ input, textarea, keygen, select, button {
 }
 
 .page3 button,
-.page3 #ap-footer {
+.page3 #ap-footer,
+.page3 .upload-button {
 	background: hsl(43, 100%, 50%);
 }
 
 .page3 button:active,
-.page3 #ap-footer:hover {
+.page3 #ap-footer:hover,
+.page3 input[type="file"]:active + .upload-button {
 	background: hsl(43, 100%, 45%);
 }
 
@@ -554,54 +601,57 @@ input, textarea, keygen, select, button {
 
 .page4 input[type="text"]:focus,
 .page4 .instruction h3 {
-	border-color: hsl(2088, 100%, 55%);
+	border-color: hsl(288, 100%, 55%);
 }
 
 .page4 #sidebar {
-	background: hsl(2088, 100%, 40%);
+	background: hsl(288, 100%, 40%);
 }
 
 .page4 #sidebar-top,
 .page4 .sidebar-step {
-	border-bottom: 1px solid hsl(2088, 100%, 35%);
+	border-bottom: 1px solid hsl(288, 100%, 35%);
 }
 
 .page4 .sidebar-step:hover {
-	background: hsl(2088, 100%, 38%);
+	background: hsl(288, 100%, 38%);
 }
 
 .page4 .sidebar-step h4 {
-	color: hsl(2088, 100%, 30%);
+	color: hsl(288, 100%, 30%);
 }
 
 .page4 .sidebar-step h3,
 .page4 #sidebar-bottom,
 .page4 #wrapper h2,
 .page4 .ap-col-val i:hover,
-.page4 .instruction h3 {
-	color: hsl(2088, 100%, 50%);
+.page4 .instruction h3,
+.page4 .selected-file {
+	color: hsl(288, 100%, 50%);
 }
 
 .page4 .current-step,
 .page4 .current-step:hover {
-	background: hsl(2088, 100%, 35%);
+	background: hsl(288, 100%, 35%);
 }
 
 .page4 .current-step h4 {
-	color: hsl(2088, 100%, 20%);
+	color: hsl(288, 100%, 20%);
 }
 
 .page4 #rule-desc:focus,
 .page4 #rule-xml:focus {
-	background: hsl(2088, 100%, 98%);
+	background: hsl(288, 100%, 98%);
 }
 
 .page4 button,
-.page4 #ap-footer {
-	background: hsl(2088, 100%, 50%);
+.page4 #ap-footer,
+.page4 .upload-button {
+	background: hsl(288, 100%, 50%);
 }
 
 .page4 button:active,
-.page4 #ap-footer:hover {
-	background: hsl(2088, 100%, 45%);
+.page4 #ap-footer:hover,
+.page4 input[type="file"]:active + .upload-button {
+	background: hsl(288, 100%, 45%);
 }

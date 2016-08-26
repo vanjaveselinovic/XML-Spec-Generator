@@ -102,8 +102,11 @@
 					<div id="pp-right">
 						<textarea id="rule-xml" placeholder="Paste valid MediaInfo XML here"></textarea>
 						<div id="pp-upload">
-							<div class="pp-divider">&mdash;OR&mdash;</div>
-							Upload a file that you want to base the specification on.<button id="browse-button">Browse</button>
+							<div id="pp-upload-text">Upload a file that you want to base the specification on.</div>
+							<input type="file" id="pp-file">
+							<label for="pp-file" class="upload-button no-highlight">Browse</label>
+							<div id="pp-selected-file" class="selected-file">No file selected</div>
+							<div class="pp-divider">OR</div>
 						</div>
 					</div>
 				</div>
