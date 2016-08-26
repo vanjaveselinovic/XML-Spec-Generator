@@ -93,9 +93,10 @@ $(document).ready(function () {
 			if ((state >> 3) % 2 !== 0 || offset >= fileSize) {
 				var result = mi.inform();
 				mi.close();
+				generateDone(result);
 				processing = false;
 				clearInterval(statusInterval);
-				return result;
+				return;
 			}
 			seek(l);
 		};
