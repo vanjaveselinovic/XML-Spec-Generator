@@ -134,7 +134,7 @@ $(document).ready(function () {
 
 			var uploadEl = $('#pp-file').get(0);
     	  	if (uploadEl.files.length > 0) {
-      			var oDOM = oParser.parseFromString(parseFile(uploadEl.files[0]));
+      			var oDOM = oParser.parseFromString(parseFile(uploadEl.files[0]), "text/xml");
   	    	}
 
   	    	console.log(oDOM);
