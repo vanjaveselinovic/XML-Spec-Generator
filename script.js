@@ -113,13 +113,11 @@ $(document).ready(function () {
 
 		//print status
 		statusInterval = window.setInterval(function() {
-			$statuspercent.text((offset / fileSize * 100).toFixed(0));
+			console.log((offset / fileSize * 100).toFixed(0));
 		}, 1000);
 
 		//start
 		seek(CHUNK_SIZE);
-
-		_paq.push(['trackEvent', 'File', 'AnalysisRun', file.name]);
 	}
 
 	var miLib = MediaInfo(function() {
