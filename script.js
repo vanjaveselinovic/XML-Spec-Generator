@@ -132,15 +132,19 @@ $(document).ready(function () {
 		$('#generate-button').click(function () {
 
 			var oParser = new DOMParser();
-			//var oDOM = oParser.parseFromString($('#rule-xml').val().trim(), "text/xml");
+			var oDOM = ''; //oParser.parseFromString($('#rule-xml').val().trim(), "text/xml");
 			
 
 			var uploadEl = $('#pp-file').get(0);
-    	  	if (uploadEl.files.length > 0) {
-      			var oDOM = oParser.parseFromString(parseFile(uploadEl.files[0]), "text/xml");
-  	    	}
+			var xmlFromMediaInfo = '';
 
-  	    	console.log(oDOM);
+    	  	if (uploadEl.files.length > 0) {
+    	  		xmlFromMediaInfo = parseFile(uploadEl.files[0]);
+    	  		console.log(xmlFromMediaInfo);
+    	  		
+  	    		oDOM = oParser.parseFromString(xmlFromMediaInfo, "text/xml");
+  	    		console.log(oDOM);
+  	    	}
 
 			if ($('#rule-name').val() !== ''
 				&& $('#rule-desc').val() !== ''
