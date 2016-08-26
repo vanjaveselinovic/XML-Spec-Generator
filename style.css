@@ -49,6 +49,10 @@ button:active {
 	outline: none;
 }
 
+button:disabled {
+	opacity: 0.4;
+}
+
 input[type="file"] {
 	width: 0.1px;
 	height: 0.1px;
@@ -247,6 +251,7 @@ input, textarea, keygen, select, button {
 	height: 100%;
 	float: left;
 	padding: 10px;
+	position: relative;
 }
 
 #pp-left {
@@ -333,6 +338,31 @@ input, textarea, keygen, select, button {
 #rule-xml:focus + #pp-upload {
 	height: 0px !important;
 	opacity: 0;
+}
+
+.rule-required {
+	font-size: 0.5em;
+	position: absolute;
+	display: none;
+}
+
+.invalid-input .rule-required, .invalid-input + .rule-required {
+	display: block;
+}
+
+.rr-name {
+	top: 12px;
+	right: 10px;
+}
+
+.rr-desc {
+	top: 42px;
+	right: 10px;
+}
+
+.rr-upload {
+	top: 57px;
+	right: 10px;
 }
 
 #generate-button {
@@ -449,7 +479,8 @@ input, textarea, keygen, select, button {
 .page1 #wrapper h2,
 .page1 .ap-col-val i:hover,
 .page1 .instruction h3,
-.page1 .selected-file {
+.page1 .selected-file,
+.page1 .rule-required {
 	color: hsl(208, 100%, 50%);
 }
 
@@ -508,7 +539,8 @@ input, textarea, keygen, select, button {
 .page2 #wrapper h2,
 .page2 .ap-col-val i:hover,
 .page2 .instruction h3,
-.page2 .selected-file {
+.page2 .selected-file,
+.page2 .rule-required {
 	color: hsl(336, 100%, 50%);
 }
 
@@ -567,7 +599,8 @@ input, textarea, keygen, select, button {
 .page3 #wrapper h2,
 .page3 .ap-col-val i:hover,
 .page3 .instruction h3,
-.page3 .selected-file {
+.page3 .selected-file,
+.page3 .rule-required {
 	color: hsl(43, 100%, 50%);
 }
 
@@ -626,7 +659,8 @@ input, textarea, keygen, select, button {
 .page4 #wrapper h2,
 .page4 .ap-col-val i:hover,
 .page4 .instruction h3,
-.page4 .selected-file {
+.page4 .selected-file,
+.page4 .rule-required {
 	color: hsl(288, 100%, 50%);
 }
 

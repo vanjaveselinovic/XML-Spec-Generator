@@ -57,10 +57,42 @@ $(document).ready(function () {
 
 	/* STEP 1 Generate */
 
+	$('#rule-name').click(function () {
+		$('#rule-name').removeClass('invalid-input');
+	});
+
+	$('#rule-desc').click(function () {
+		$('#rule-desc').removeClass('invalid-input');
+	});
+
+	$('#rule-xml').click(function () {
+		$('#pp-right').removeClass('invalid-input');
+	});
+
+	$('#rule-xml').change(function () {
+		if($('#rule-xml').val() !== '') {
+			$('#pp-upload').css('height', '0px');
+			$('#rule-xml').css('height', '130px')
+		}
+		else {
+			$('#pp-upload').css('height', '65px');
+			$('#rule-xml').css('height', '65px');
+		}
+	});
+
+	$('#pp-file').change(function (ev) {
+		var el = $(ev.target);
+
+		$('#pp-right').removeClass('invalid-input');
+		$(el[0].nextSibling.nextSibling.nextSibling.nextSibling).text(el[0].value.substr(12));
+	});
+
 	var CHUNK_SIZE = 5 * 1024 * 1024;
 	var miLib, mi;
 	var processing = false;
 
+	var oParser = new DOMParser();
+	var oDOM = '';
 
 	function parseFile(file) {
 		if (processing) {
@@ -125,75 +157,76 @@ $(document).ready(function () {
 	}
 
 	function generateDone(xmlFromMediaInfo) {
-		var oParser = new DOMParser();
-		var oDOM = ''; //oParser.parseFromString($('#rule-xml').val().trim(), "text/xml");	
+		oDOM = oParser.parseFromString(xmlFromMediaInfo, "text/xml");
 
-  	    oDOM = oParser.parseFromString(xmlFromMediaInfo, "text/xml");
+  	    $('#attributes-panel').removeClass('disabled-div');
 
-  	    if ($('#rule-name').val() !== ''
-			&& $('#rule-desc').val() !== ''
-			&& $(oDOM.documentElement)[0].outerHTML.indexOf('parsererror') === -1) {
+		var attributes = getAttributes(oDOM);
 
-				$('#attributes-panel').removeClass('disabled-div');
+		for(var i = 0; i < attributes.length; i++) {
+			addApRow(attributes[i]['tag'], attributes[i]['val']);
+		}
 
-				var attributes = getAttributes(oDOM);
-
-				for(var i = 0; i < attributes.length; i++) {
-					addApRow(attributes[i]['tag'], attributes[i]['val']);
-				}
-
-				ga('send', 'event', 'Step 2 Build', 'generation', 'success');
-			}
-			else {
-				if($('#rule-name').val() === '') {
-					$('#rule-name').addClass('invalid-input');
-					ga('send', 'event', 'Step 2 Build', 'generation', 'failure - no title');
-				}
-				if ($('#rule-desc').val() === '') {
-					$('#rule-desc').addClass('invalid-input');
-					ga('send', 'event', 'Step 2 Build', 'generation', 'failure - no description');
-				}
-				if ($(oDOM.documentElement)[0].outerHTML.indexOf('parsererror') !== -1) {
-					$('#rule-xml').addClass('invalid-input');
-					ga('send', 'event', 'Step 2 Build', 'generation', 'failure - no/invalid xml');
-				}
-			}
+		ga('send', 'event', 'Step 2 Build', 'generation', 'success with file');
 	}
 
-	var miLib = MediaInfo(function() {
+	/*var miLib = MediaInfo(function() {
 		console.debug('MediaInfo ready');
 
     	window['miLib'] = miLib; // debug
     	mi = new miLib.MediaInfo();
 
-		$('#generate-button').click(function () {
+    	$('#generate-button').attr('disabled', 'false');
+	});*/
 
-			var uploadEl = $('#pp-file').get(0);
-			var xmlFromMediaInfo = '';
+	$('#generate-button').click(function () {
+		if ($('#rule-name').val() !== ''
+			&& $('#rule-desc').val() !== ''
+			&& ($('#pp-file')[0].files.length > 0
+				|| $('#rule-xml').val() !== '')) {
 
-    	  	if (uploadEl.files.length > 0) {
-    	  		parseFile(uploadEl.files[0]);
-  	    	}
+			if ($('#rule-xml').val !== '') {
+				oDOM = oParser.parseFromString($('#rule-xml').val(), "text/xml");
 
-			ga('send', 'event', 'Step 2 Build', 'click', 'generate attributes');
-		});
-	});
+				if($(oDOM.documentElement)[0].outerHTML.indexOf('parsererror') === -1){
+					$('#attributes-panel').removeClass('disabled-div');
 
-	$('#rule-xml').change(function () {
-		if($('#rule-xml').val() !== '') {
-			$('#pp-upload').css('height', '0px');
-			$('#rule-xml').css('height', '130px')
+					var attributes = getAttributes(oDOM);
+
+					for(var i = 0; i < attributes.length; i++) {
+						addApRow(attributes[i]['tag'], attributes[i]['val']);
+					}
+
+					ga('send', 'event', 'Step 2 Build', 'generation', 'success with xml');
+				}
+				else {
+					ga('send', 'event', 'Step 2 Build', 'generation', 'failure - invalid xml');
+				}
+			}
+			else {
+				var xmlFromMediaInfo = '';
+
+			  	if ($('#pp-file')[0].files.length > 0) {
+			  		parseFile($('#pp-file')[0].files[0]);
+			    }
+			}
 		}
 		else {
-			$('#pp-upload').css('height', '65px');
-			$('#rule-xml').css('height', '65px');
+			if($('#rule-name').val() === '') {
+				$('#rule-name').addClass('invalid-input');
+				ga('send', 'event', 'Step 2 Build', 'generation', 'failure - no name');
+			}
+			if ($('#rule-desc').val() === '') {
+				$('#rule-desc').addClass('invalid-input');
+				ga('send', 'event', 'Step 2 Build', 'generation', 'failure - no description');
+			}
+			if ($('#pp-file')[0].files.length <= 0 && $('#rule-xml').val() === '') {
+				$('#pp-right').addClass('invalid-input');
+				ga('send', 'event', 'Step 2 Build', 'generation', 'failure - no file or xml');
+			}
 		}
-	});
 
-	$('#pp-file').change(function (ev) {
-		var el = $(ev.target);
-
-		$(el[0].nextSibling.nextSibling.nextSibling.nextSibling).text(el[0].value.substr(12));
+		ga('send', 'event', 'Step 2 Build', 'click', 'generate attributes');
 	});
 
 	/* STEP 2 Build */
