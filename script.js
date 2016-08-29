@@ -56,10 +56,12 @@ $(document).ready(function () {
 	$('#rule-xml').change(function () {
 		if($('#rule-xml').val() !== '') {
 			$('#pp-upload').css('height', '0px');
-			$('#rule-xml').css('height', '130px')
+			$('#pp-file').addAttr('disabled');
+			$('#rule-xml').css('height', '130px');
 		}
 		else {
 			$('#pp-upload').css('height', '65px');
+			$('#pp-file').removeAttr('disabled');
 			$('#rule-xml').css('height', '65px');
 		}
 	});
