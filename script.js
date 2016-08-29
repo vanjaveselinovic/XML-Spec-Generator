@@ -154,7 +154,10 @@ $(document).ready(function () {
 			addApRow(attributes[i]['tag'], attributes[i]['val']);
 		}
 
-		ga('send', 'event', 'Step 2 Build', 'generation', 'success with file');
+		$('body').removeClass('page1 page3 page4');
+		$('body').addClass('page2');
+
+		ga('send', 'event', 'Step 1 Generate', 'generation', 'success with file');
 	}
 
 	var miLib = MediaInfo(function() {
@@ -185,10 +188,13 @@ $(document).ready(function () {
 						addApRow(attributes[i]['tag'], attributes[i]['val']);
 					}
 
-					ga('send', 'event', 'Step 2 Build', 'generation', 'success with xml');
+					$('body').removeClass('page1 page3 page4');
+					$('body').addClass('page2');
+
+					ga('send', 'event', 'Step 1 Generate', 'generation', 'success with xml');
 				}
 				else {
-					ga('send', 'event', 'Step 2 Build', 'generation', 'failure - invalid xml');
+					ga('send', 'event', 'Step 1 Generate', 'generation', 'failure - invalid xml');
 				}
 			}
 			else {
@@ -200,19 +206,19 @@ $(document).ready(function () {
 		else {
 			if($('#rule-name').val() === '') {
 				$('#rule-name').addClass('invalid-input');
-				ga('send', 'event', 'Step 2 Build', 'generation', 'failure - no name');
+				ga('send', 'event', 'Step 1 Generate', 'generation', 'failure - no name');
 			}
 			if ($('#rule-desc').val() === '') {
 				$('#rule-desc').addClass('invalid-input');
-				ga('send', 'event', 'Step 2 Build', 'generation', 'failure - no description');
+				ga('send', 'event', 'Step 1 Generate', 'generation', 'failure - no description');
 			}
 			if ($('#pp-file')[0].files.length <= 0 && $('#rule-xml').val() === '') {
 				$('#pp-right').addClass('invalid-input');
-				ga('send', 'event', 'Step 2 Build', 'generation', 'failure - no file or xml');
+				ga('send', 'event', 'Step 1 Generate', 'generation', 'failure - no file or xml');
 			}
 		}
 
-		ga('send', 'event', 'Step 2 Build', 'click', 'generate attributes');
+		ga('send', 'event', 'Step 1 Generate', 'click', 'generate attributes');
 	});
 
 	/* STEP 2 Build */
@@ -256,6 +262,16 @@ $(document).ready(function () {
 			ga('send', 'event', 'Step 2 Build', 'click', 'remove attribute');
 		});
 	};
+
+	$('#delete-all-button').click(function() {
+		if(confirm("Delete all attributes?")) {
+			$('.ap-row').each(function () {
+				$(this).remove();
+			});
+
+			$('#attributes-panel').addClass('disabled-div');
+		}
+	});
 
 	$('#ap-footer').click(function () {
 		addApRow('', '');

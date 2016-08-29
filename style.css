@@ -416,7 +416,7 @@ input, textarea, keygen, select, button {
 	flex: 0 1 auto;
 }
 
-.delete-all-button {
+#delete-all-button {
 	right: 0;
     margin-right: 5px;
     font-size: 1.2em !important;
