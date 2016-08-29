@@ -113,6 +113,8 @@ input, textarea, keygen, select, button {
 	-moz-user-select: none; /* Firefox */
 	-ms-user-select: none; /* Internet Explorer/Edge */
 	user-select: none;
+	display: block;
+	text-decoration: none;
 }
 
 .sidebar-step h4, .sidebar-step h3 {

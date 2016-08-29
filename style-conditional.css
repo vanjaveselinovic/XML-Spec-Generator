@@ -14,7 +14,8 @@
 	border-bottom: 1px solid hsl(208, 100%, 35%);
 }
 
-.page1 .sidebar-step:hover {
+.page1 .sidebar-step:hover,
+.page1 .sidebar-step:focus {
 	background: hsl(208, 100%, 38%);
 }
 
@@ -74,7 +75,8 @@
 	border-bottom: 1px solid hsl(336, 100%, 35%);
 }
 
-.page2 .sidebar-step:hover {
+.page2 .sidebar-step:hover,
+.page2 .sidebar-step:focus {
 	background: hsl(336, 100%, 38%);
 }
 
@@ -134,7 +136,8 @@
 	border-bottom: 1px solid hsl(43, 100%, 35%);
 }
 
-.page3 .sidebar-step:hover {
+.page3 .sidebar-step:hover,
+.page3 .sidebar-step:focus {
 	background: hsl(43, 100%, 38%);
 }
 
@@ -194,7 +197,8 @@
 	border-bottom: 1px solid hsl(288, 100%, 35%);
 }
 
-.page4 .sidebar-step:hover {
+.page4 .sidebar-step:hover,
+.page4 .sidebar-step:focus {
 	background: hsl(288, 100%, 38%);
 }
 
