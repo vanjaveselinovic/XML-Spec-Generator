@@ -159,6 +159,7 @@ $(document).ready(function () {
 	function generateDone(xmlFromMediaInfo) {
 		oDOM = oParser.parseFromString(xmlFromMediaInfo, "text/xml");
 
+		$('#generate-button').removeAttr('disabled');
   	    $('#attributes-panel').removeClass('disabled-div');
 
 		var attributes = getAttributes(oDOM);
@@ -176,7 +177,7 @@ $(document).ready(function () {
     	window['miLib'] = miLib; // debug
     	mi = new miLib.MediaInfo();
 
-    	$('#generate-button').removeAttr('disabled');
+    	$('#pp-file').removeAttr('disabled');
 	});
 
 	$('#generate-button').click(function () {

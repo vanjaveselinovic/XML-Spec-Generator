@@ -105,9 +105,9 @@
 					</div>
 					<div id="pp-right">
 						<textarea id="rule-xml" placeholder="Paste valid MediaInfo XML here"></textarea>
-						<div id="pp-upload">
+						<div id="pp-upload" class="disabled-div">
 							<div id="pp-upload-text">Choose a file that you want to base the specification on.</div>
-							<input type="file" id="pp-file">
+							<input type="file" id="pp-file" disabled>
 							<label for="pp-file" class="upload-button no-highlight">Browse</label>
 							<div id="pp-selected-file" class="selected-file">No file selected</div>
 							<div class="pp-divider">OR</div>
@@ -116,7 +116,7 @@
 					</div>
 				</div>
 				<div class="section section-center">
-					<button id="generate-button" disabled>Generate</button>
+					<button id="generate-button">Generate</button>
 				</div>
 				<div id="attributes-panel" class="section section-panel section-fill disabled-div">
 					<div id="ap-header" class="header">
@@ -127,6 +127,7 @@
 						<div class="ap-col">
 							<i class="material-icons">border_color</i>
 							<span>Value</span>
+							<i class="material-icons delete-all-button no-highlight">delete_sweep</i>
 						</div>
 					</div>
 					<div id="ap-main">
