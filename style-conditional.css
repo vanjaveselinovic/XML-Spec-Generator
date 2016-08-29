@@ -1,0 +1,239 @@
+/* page1 colors */
+
+.page1 input[type="text"]:focus,
+.page1 .instruction h3 {
+	border-color: hsl(208, 100%, 55%);
+}
+
+.page1 #sidebar {
+	background: hsl(208, 100%, 40%);
+}
+
+.page1 #sidebar-top,
+.page1 .sidebar-step {
+	border-bottom: 1px solid hsl(208, 100%, 35%);
+}
+
+.page1 .sidebar-step:hover {
+	background: hsl(208, 100%, 38%);
+}
+
+.page1 .sidebar-step h4 {
+	color: hsl(208, 100%, 30%);
+}
+
+.page1 .sidebar-step h3,
+.page1 #sidebar-bottom,
+.page1 #wrapper h2,
+.page1 .ap-col-val i:hover,
+.page1 .instruction h3,
+.page1 .selected-file,
+.page1 .rule-required {
+	color: hsl(208, 100%, 50%);
+}
+
+.page1 .current-step,
+.page1 .current-step:hover {
+	background: hsl(208, 100%, 35%);
+}
+
+.page1 .current-step h4 {
+	color: hsl(208, 100%, 20%);
+}
+
+.page1 #rule-desc:focus,
+.page1 #rule-xml:focus {
+	background: hsl(208, 100%, 98%);
+}
+
+.page1 button,
+.page1 #ap-footer,
+.page1 .upload-button {
+	background: hsl(208, 100%, 50%);
+}
+
+.page1 button:active,
+.page1 #ap-footer:hover,
+.page1 input[type="file"]:active + .upload-button {
+	background: hsl(208, 100%, 45%);
+}
+
+/* page2 colors */
+
+.page2 input[type="text"]:focus,
+.page2 .instruction h3 {
+	border-color: hsl(336, 100%, 55%);
+}
+
+.page2 #sidebar {
+	background: hsl(336, 100%, 40%);
+}
+
+.page2 #sidebar-top,
+.page2 .sidebar-step {
+	border-bottom: 1px solid hsl(336, 100%, 35%);
+}
+
+.page2 .sidebar-step:hover {
+	background: hsl(336, 100%, 38%);
+}
+
+.page2 .sidebar-step h4 {
+	color: hsl(336, 100%, 30%);
+}
+
+.page2 .sidebar-step h3,
+.page2 #sidebar-bottom,
+.page2 #wrapper h2,
+.page2 .ap-col-val i:hover,
+.page2 .instruction h3,
+.page2 .selected-file,
+.page2 .rule-required {
+	color: hsl(336, 100%, 50%);
+}
+
+.page2 .current-step,
+.page2 .current-step:hover {
+	background: hsl(336, 100%, 35%);
+}
+
+.page2 .current-step h4 {
+	color: hsl(336, 100%, 20%);
+}
+
+.page2 #rule-desc:focus,
+.page2 #rule-xml:focus {
+	background: hsl(336, 100%, 98%);
+}
+
+.page2 button,
+.page2 #ap-footer,
+.page2 .upload-button {
+	background: hsl(336, 100%, 50%);
+}
+
+.page2 button:active,
+.page2 #ap-footer:hover,
+.page2 input[type="file"]:active + .upload-button {
+	background: hsl(336, 100%, 45%);
+}
+
+/* page3 colors */
+
+.page3 input[type="text"]:focus,
+.page3 .instruction h3 {
+	border-color: hsl(43, 100%, 55%);
+}
+
+.page3 #sidebar {
+	background: hsl(43, 100%, 40%);
+}
+
+.page3 #sidebar-top,
+.page3 .sidebar-step {
+	border-bottom: 1px solid hsl(43, 100%, 35%);
+}
+
+.page3 .sidebar-step:hover {
+	background: hsl(43, 100%, 38%);
+}
+
+.page3 .sidebar-step h4 {
+	color: hsl(43, 100%, 30%);
+}
+
+.page3 .sidebar-step h3,
+.page3 #sidebar-bottom,
+.page3 #wrapper h2,
+.page3 .ap-col-val i:hover,
+.page3 .instruction h3,
+.page3 .selected-file,
+.page3 .rule-required {
+	color: hsl(43, 100%, 50%);
+}
+
+.page3 .current-step,
+.page3 .current-step:hover {
+	background: hsl(43, 100%, 35%);
+}
+
+.page3 .current-step h4 {
+	color: hsl(43, 100%, 20%);
+}
+
+.page3 #rule-desc:focus,
+.page3 #rule-xml:focus {
+	background: hsl(43, 100%, 98%);
+}
+
+.page3 button,
+.page3 #ap-footer,
+.page3 .upload-button {
+	background: hsl(43, 100%, 50%);
+}
+
+.page3 button:active,
+.page3 #ap-footer:hover,
+.page3 input[type="file"]:active + .upload-button {
+	background: hsl(43, 100%, 45%);
+}
+
+/* page4 colors */
+
+.page4 input[type="text"]:focus,
+.page4 .instruction h3 {
+	border-color: hsl(288, 100%, 55%);
+}
+
+.page4 #sidebar {
+	background: hsl(288, 100%, 40%);
+}
+
+.page4 #sidebar-top,
+.page4 .sidebar-step {
+	border-bottom: 1px solid hsl(288, 100%, 35%);
+}
+
+.page4 .sidebar-step:hover {
+	background: hsl(288, 100%, 38%);
+}
+
+.page4 .sidebar-step h4 {
+	color: hsl(288, 100%, 30%);
+}
+
+.page4 .sidebar-step h3,
+.page4 #sidebar-bottom,
+.page4 #wrapper h2,
+.page4 .ap-col-val i:hover,
+.page4 .instruction h3,
+.page4 .selected-file,
+.page4 .rule-required {
+	color: hsl(288, 100%, 50%);
+}
+
+.page4 .current-step,
+.page4 .current-step:hover {
+	background: hsl(288, 100%, 35%);
+}
+
+.page4 .current-step h4 {
+	color: hsl(288, 100%, 20%);
+}
+
+.page4 #rule-desc:focus,
+.page4 #rule-xml:focus {
+	background: hsl(288, 100%, 98%);
+}
+
+.page4 button,
+.page4 #ap-footer,
+.page4 .upload-button {
+	background: hsl(288, 100%, 50%);
+}
+
+.page4 button:active,
+.page4 #ap-footer:hover,
+.page4 input[type="file"]:active + .upload-button {
+	background: hsl(288, 100%, 45%);
+}
