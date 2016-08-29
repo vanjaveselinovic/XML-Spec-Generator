@@ -136,10 +136,7 @@ $(document).ready(function () {
 		seek(CHUNK_SIZE);
 	}
 
-	function generateDone(xmlFromMediaInfo) {
-		oDOM = oParser.parseFromString(xmlFromMediaInfo, "text/xml");
-
-		$('#generate-button').removeAttr('disabled');
+	function addAttributes (oDOM) {
   	    $('#attributes-panel').removeClass('disabled-div');
 
 		var attributes = getAttributes(oDOM);
@@ -149,6 +146,10 @@ $(document).ready(function () {
 		}
 
 		goToStep(2);
+	}
+
+	function generateDone(xmlFromMediaInfo) {
+  	    addAttributes(oParser.parseFromString(xmlFromMediaInfo, "text/xml"));
 
 		ga('send', 'event', 'Step 1 Generate', 'generation', 'success with file');
 	}
@@ -173,15 +174,7 @@ $(document).ready(function () {
 				oDOM = oParser.parseFromString($('#rule-xml').val(), "text/xml");
 
 				if($(oDOM.documentElement)[0].outerHTML.indexOf('parsererror') === -1){
-					$('#attributes-panel').removeClass('disabled-div');
-
-					var attributes = getAttributes(oDOM);
-
-					for(var i = 0; i < attributes.length; i++) {
-						addApRow(attributes[i]['tag'], attributes[i]['val']);
-					}
-
-					goToStep(2);
+					addAttributes(oDOM);
 
 					ga('send', 'event', 'Step 1 Generate', 'generation', 'success with xml');
 				}
@@ -237,17 +230,13 @@ $(document).ready(function () {
 		return attributes;
 	}
 
-	function apRow(tag, val) {
-		return '<div class="ap-row"><div class="ap-col ap-col-tag"><input type="text" value="'+tag+'"></div><div class="ap-col ap-col-val"><input type="text" value="'+val+'"><i class="material-icons no-highlight">delete</i></div></div>';
-	}
-
 	function addApRow(tag, val) {
-		$('#ap-main').append(apRow(tag, val));
+		$('#ap-main').append('<div class="ap-row"><div class="ap-col ap-col-tag"><input type="text" value="'+tag+'"></div><div class="ap-col ap-col-val"><input type="text" value="'+val+'"><i class="material-icons no-highlight">delete</i></div></div>');
 
 		$('.ap-row:last-of-type .ap-col-val i').click(function (ev) {
 			var el = $(ev.target);
 
-			deletedAttributes.push(apRow(el[0].parentElement.previousSibling.children[0].text, el[0].previousSibling.text));
+			deletedAttributes.push([el[0].parentElement.previousSibling.children[0].text, el[0].previousSibling.text]);
 
 			$(el[0].parentElement.parentElement).remove();
 
