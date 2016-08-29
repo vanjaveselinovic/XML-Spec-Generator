@@ -104,10 +104,10 @@
 						<textarea id="rule-desc" placeholder="Rule description"></textarea><div class="rule-required rr-desc">*required</div>
 					</div>
 					<div id="pp-right">
-						<textarea id="rule-xml" placeholder="Paste valid MediaInfo XML here"></textarea>
+						<textarea id="rule-xml" placeholder="Paste valid MediaInfo XML here" tabindex="2"></textarea>
 						<div id="pp-upload" class="disabled-div">
 							<div id="pp-upload-text">Choose a file that you want to base the specification on.</div>
-							<input type="file" id="pp-file" disabled>
+							<input type="file" id="pp-file" disabled tabindex="1">
 							<label for="pp-file" class="upload-button no-highlight">Browse</label>
 							<div id="pp-selected-file" class="selected-file">No file selected</div>
 							<div class="pp-divider">OR</div>
@@ -116,7 +116,7 @@
 					</div>
 				</div>
 				<div class="section section-center">
-					<button id="generate-button">Generate</button>
+					<button id="generate-button" tabindex="3">Generate</button>
 				</div>
 				<div id="attributes-panel" class="section section-panel section-fill disabled-div">
 					<div id="ap-header" class="header">
