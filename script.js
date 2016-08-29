@@ -138,6 +138,26 @@ $(document).ready(function () {
 		seek(CHUNK_SIZE);
 	}
 
+	function getAttributes(oDOM) {
+		var attributes = [];
+
+		var elements = oDOM.getElementsByTagName("*");
+
+		var element;
+		for (var i = 0; i < elements.length; i++) {
+
+			element = $(elements[i])[0];
+			if (element.children.length === 0) {
+				attributes.push({
+					tag: element.tagName,
+					val: element.textContent
+				});
+			}
+		}
+
+		return attributes;
+	}
+
 	function addAttributes (oDOM) {
   	    $('#attributes-panel').removeClass('disabled-div');
 
@@ -150,6 +170,9 @@ $(document).ready(function () {
 		goToStep(2);
 		$('#page3').removeClass('disabled-div');
 		$('#page4').removeClass('disabled-div');
+		$('html, body, #wrapper').animate({
+	        scrollTop: $("#page2").offset().top
+	    }, 200);
 	}
 
 	function generateDone(xmlFromMediaInfo) {
@@ -214,26 +237,6 @@ $(document).ready(function () {
 
 	var deletedAttributes = [];
 
-	function getAttributes(oDOM) {
-		var attributes = [];
-
-		var elements = oDOM.getElementsByTagName("*");
-
-		var element;
-		for (var i = 0; i < elements.length; i++) {
-
-			element = $(elements[i])[0];
-			if (element.children.length === 0) {
-				attributes.push({
-					tag: element.tagName,
-					val: element.textContent
-				});
-			}
-		}
-
-		return attributes;
-	}
-
 	function addApRow(tag, val) {
 		$('#ap-main').append('<div class="ap-row"><div class="ap-col ap-col-tag"><input type="text" value="'+tag+'"></div><div class="ap-col ap-col-val"><input type="text" value="'+val+'"><i class="material-icons no-highlight">delete</i></div></div>');
 
@@ -243,6 +246,14 @@ $(document).ready(function () {
 			deletedAttributes.push([el[0].parentElement.previousSibling.children[0].text, el[0].previousSibling.text]);
 
 			$(el[0].parentElement.parentElement).remove();
+
+			if($('.ap-row').length === 0) {
+				$('#attributes-panel').addClass('disabled-div');
+				goToStep(1);
+				$('html, body, #wrapper').animate({
+	                scrollTop: $("#page2").offset().top
+	            }, 200);
+			}
 
 			ga('send', 'event', 'Step 2 Build', 'click', 'remove attribute');
 		});
@@ -255,6 +266,10 @@ $(document).ready(function () {
 			});
 
 			$('#attributes-panel').addClass('disabled-div');
+			goToStep(1);
+			$('html, body, #wrapper').animate({
+                scrollTop: $("#page2").offset().top
+            }, 200);
 		}
 	});
 
