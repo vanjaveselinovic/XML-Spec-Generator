@@ -1,4 +1,5 @@
 $(document).ready(function () {
+	var mediaInfoLoaded = false;
 
 	if (window.location.href.indexOf('#') !== -1) {
 		window.history.replaceState({}, document.title, window.location.pathname);
@@ -50,12 +51,12 @@ $(document).ready(function () {
 	$('#rule-xml').change(function () {
 		if($('#rule-xml').val() !== '') {
 			$('#pp-upload').css('height', '0px');
-			$('#pp-file').attr('disabled', 'true');
+			if(mediaInfoLoaded)	$('#pp-file').attr('disabled', 'true');
 			$('#rule-xml').css('height', '130px');
 		}
 		else {
 			$('#pp-upload').css('height', '65px');
-			$('#pp-file').removeAttr('disabled');
+			if(mediaInfoLoaded)	$('#pp-file').removeAttr('disabled');
 			$('#rule-xml').css('height', '65px');
 		}
 	});
@@ -189,6 +190,7 @@ $(document).ready(function () {
 
     	$('#pp-file').removeAttr('disabled');
     	$('#pp-upload').removeClass('disabled-div');
+    	mediaInfoLoaded = true;
 	});
 
 	$('#generate-button').click(function () {
