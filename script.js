@@ -56,7 +56,7 @@ $(document).ready(function () {
 	$('#rule-xml').change(function () {
 		if($('#rule-xml').val() !== '') {
 			$('#pp-upload').css('height', '0px');
-			$('#pp-file').attr('disabled');
+			$('#pp-file').attr('disabled', 'true');
 			$('#rule-xml').css('height', '130px');
 		}
 		else {
