@@ -55,7 +55,8 @@
 
 .page1 button:active,
 .page1 #ap-footer:hover,
-.page1 input[type="file"]:active + .upload-button {
+.page1 input[type="file"]:active + .upload-button,
+.page1 input[type="file"]:focus + .upload-button {
 	background: hsl(208, 100%, 45%);
 }
 
@@ -116,7 +117,8 @@
 
 .page2 button:active,
 .page2 #ap-footer:hover,
-.page2 input[type="file"]:active + .upload-button {
+.page2 input[type="file"]:active + .upload-button,
+.page2 input[type="file"]:focus + .upload-button {
 	background: hsl(336, 100%, 45%);
 }
 
@@ -177,7 +179,8 @@
 
 .page3 button:active,
 .page3 #ap-footer:hover,
-.page3 input[type="file"]:active + .upload-button {
+.page3 input[type="file"]:active + .upload-button,
+.page3 input[type="file"]:focus + .upload-button {
 	background: hsl(43, 100%, 45%);
 }
 
@@ -238,6 +241,7 @@
 
 .page4 button:active,
 .page4 #ap-footer:hover,
-.page4 input[type="file"]:active + .upload-button {
+.page4 input[type="file"]:active + .upload-button,
+.page4 input[type="file"]:focus + .upload-button {
 	background: hsl(288, 100%, 45%);
 }
