@@ -178,6 +178,7 @@ $(document).ready(function () {
     	mi = new miLib.MediaInfo();
 
     	$('#pp-file').removeAttr('disabled');
+    	$('#pp-upload').removeClass('disabled-div');
 	});
 
 	$('#generate-button').click(function () {
