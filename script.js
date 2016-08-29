@@ -35,15 +35,15 @@ $(document).ready(function () {
 
 	/* STEP 1 Generate */
 
-	$('#rule-name').click(function () {
+	$('#rule-name').focus(function () {
 		$('#rule-name').removeClass('invalid-input');
 	});
 
-	$('#rule-desc').click(function () {
+	$('#rule-desc').focus(function () {
 		$('#rule-desc').removeClass('invalid-input');
 	});
 
-	$('#rule-xml').click(function () {
+	$('#rule-xml').focus(function () {
 		$('#pp-right').removeClass('invalid-input');
 	});
 
