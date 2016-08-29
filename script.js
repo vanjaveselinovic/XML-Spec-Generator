@@ -65,6 +65,8 @@ $(document).ready(function () {
 
 		$('#pp-right').removeClass('invalid-input');
 		$(el[0].nextSibling.nextSibling.nextSibling.nextSibling).text(el[0].value.substr(12));
+		if(el[0].value === '')
+			$(el[0].nextSibling.nextSibling.nextSibling.nextSibling).text('No file selected');
 	});
 
 	var CHUNK_SIZE = 5 * 1024 * 1024;
