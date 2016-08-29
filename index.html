@@ -29,19 +29,19 @@
 	<body class="page1">
 		<div id="sidebar">
 			<div id="sidebar-top">Spec Builder</div>
-			<a href="#page1" class="sidebar-step current-step" id="step1">
+			<a href="#page1" class="sidebar-step current-step" id="step1" tabindex="1">
 				<h4>Step 1</h4>
 				<h3>Generate</h3>
 			</a>
-			<a href="#page2" class="sidebar-step" id="step2">
+			<a href="#page2" class="sidebar-step" id="step2" tabindex="2">
 				<h4>Step 2</h4>
 				<h3>Build</h3>
 			</a>
-			<a href="#page3" class="sidebar-step" id="step3">
+			<a href="#page3" class="sidebar-step" id="step3" tabindex="3">
 				<h4>Step 3</h4>
 				<h3>Test</h3>
 			</a>
-			<a href="#page4" class="sidebar-step" id="step4">
+			<a href="#page4" class="sidebar-step" id="step4" tabindex="4">
 				<h4>Step 4</h4>
 				<h3>Submit</h3>
 			</a>
@@ -100,14 +100,14 @@
 			<div id="page2" class="page">
 				<div id="paste-panel" class="section section-panel no-padding">
 					<div id="pp-left">
-						<input type="text" id="rule-name" placeholder="Rule name"></input><div class="rule-required rr-name">*required</div>
-						<textarea id="rule-desc" placeholder="Rule description"></textarea><div class="rule-required rr-desc">*required</div>
+						<input type="text" id="rule-name" placeholder="Rule name" tabindex="10"></input><div class="rule-required rr-name">*required</div>
+						<textarea id="rule-desc" placeholder="Rule description"tabindex="11"></textarea><div class="rule-required rr-desc">*required</div>
 					</div>
 					<div id="pp-right">
-						<textarea id="rule-xml" placeholder="Paste valid MediaInfo XML here" tabindex="2"></textarea>
+						<textarea id="rule-xml" placeholder="Paste valid MediaInfo XML here" tabindex="22"></textarea>
 						<div id="pp-upload" class="disabled-div">
 							<div id="pp-upload-text">Choose a file that you want to base the specification on.</div>
-							<input type="file" id="pp-file" disabled tabindex="1">
+							<input type="file" id="pp-file" disabled tabindex="21">
 							<label for="pp-file" class="upload-button no-highlight">Browse</label>
 							<div id="pp-selected-file" class="selected-file">No file selected</div>
 							<div class="pp-divider">OR</div>
@@ -116,7 +116,7 @@
 					</div>
 				</div>
 				<div class="section section-center">
-					<button id="generate-button" tabindex="3">Generate</button>
+					<button id="generate-button" tabindex="23">Generate</button>
 				</div>
 				<div id="attributes-panel" class="section section-panel section-fill disabled-div">
 					<div id="ap-header" class="header">
