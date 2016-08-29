@@ -2,41 +2,31 @@ $(document).ready(function () {
 
 	/* General */
 
+	function goToStep(n) {
+		$('.sidebar-step').removeClass('current-step');
+		$($('.sidebar-step')[n-1]).addClass('current-step');
+
+		$('body').removeClass('page1 page2 page3 page4').addClass('page'+n);
+
+		ga('send', 'event', 'Sidebar', 'click', 'step'+n);
+	};
+
 	var currentStep = 1;
 
-	$('.sidebar-step').click(function (ev) {
-		var el = $(ev.target);
+	$('#step1').click(function () {
+		goToStep(1);
+	});
 
-		$('.sidebar-step').removeClass('current-step');
-		if(el.hasClass('sidebar-step'))
-			el.addClass('current-step');
-		else
-			$(el[0].parentElement).addClass('current-step');
+	$('#step2').click(function () {
+		goToStep(2);
+	});
 
-		if (el.is('#step1') || $(el[0].parentElement).is('#step1')) {
-			$('body').removeClass('page2 page3 page4');
-			$('body').addClass('page1');
+	$('#step3').click(function () {
+		goToStep(3);
+	});
 
-			ga('send', 'event', 'Sidebar', 'click', 'step1');
-		}
-		else if (el.is('#step2') || $(el[0].parentElement).is('#step2')) {
-			$('body').removeClass('page1 page3 page4');
-			$('body').addClass('page2');
-
-			ga('send', 'event', 'Sidebar', 'click', 'step2');
-		}
-		else if (el.is('#step3') || $(el[0].parentElement).is('#step3')) {
-			$('body').removeClass('page1 page2 page4');
-			$('body').addClass('page3');
-
-			ga('send', 'event', 'Sidebar', 'click', 'step3');
-		}
-		else if (el.is('#step4') || $(el[0].parentElement).is('#step4')) {
-			$('body').removeClass('page1 page2 page3');
-			$('body').addClass('page4');
-
-			ga('send', 'event', 'Sidebar', 'click', 'step4');
-		}
+	$('#step4').click(function () {
+		goToStep(4);
 	});
 
 	/* STEP 1 Generate */
@@ -154,8 +144,7 @@ $(document).ready(function () {
 			addApRow(attributes[i]['tag'], attributes[i]['val']);
 		}
 
-		$('body').removeClass('page1 page3 page4');
-		$('body').addClass('page2');
+		goToStep(2);
 
 		ga('send', 'event', 'Step 1 Generate', 'generation', 'success with file');
 	}
@@ -188,8 +177,7 @@ $(document).ready(function () {
 						addApRow(attributes[i]['tag'], attributes[i]['val']);
 					}
 
-					$('body').removeClass('page1 page3 page4');
-					$('body').addClass('page2');
+					goToStep(2);
 
 					ga('send', 'event', 'Step 1 Generate', 'generation', 'success with xml');
 				}
