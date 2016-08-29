@@ -146,6 +146,8 @@ $(document).ready(function () {
 		}
 
 		goToStep(2);
+		$('#page3').removeClass('disabled-div');
+		$('#page4').removeClass('disabled-div');
 	}
 
 	function generateDone(xmlFromMediaInfo) {

@@ -458,3 +458,25 @@ input, textarea, keygen, select, button {
 	color: white;
 	padding: 0 10px;
 }
+
+@media (max-width: 640px) {
+	#wrapper {
+		width: 100%;
+	}
+
+	#sidebar {
+		height: 50px;
+		width: 50px;
+		overflow: hidden;
+	}
+
+	#sidebar-bottom {
+		display: none;
+	}
+
+	#sidebar:hover {
+		height: 100%;
+		width: 150px;
+		overflow: initial;
+	}
+}
