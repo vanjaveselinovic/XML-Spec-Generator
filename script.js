@@ -167,32 +167,46 @@ $(document).ready(function () {
 	});
 
 	function getAttributes(oDOM) {
-		var attributes = [];
+		var tracks = [];
 
 		var elements = oDOM.getElementsByTagName("*");
+
+		var j = -1;
 
 		var element;
 		for (var i = 0; i < elements.length; i++) {
 
 			element = $(elements[i])[0];
+
+			if($(element)[0].tagName === 'track') {
+				tracks.push({
+					type: $(element)[0].attributes.type.value,
+					attributes: []
+				});
+				j++;
+			}
+
 			if (element.children.length === 0) {
-				attributes.push({
+				tracks[j].attributes.push({
 					tag: element.tagName,
 					val: element.textContent
 				});
 			}
 		}
 
-		return attributes;
+		return tracks;
 	}
 
 	function addAttributes (oDOM) {
   	    $('#attributes-panel').removeClass('disabled-div');
 
-		var attributes = getAttributes(oDOM);
+		var tracks = getAttributes(oDOM);
 
-		for (var i = 0; i < attributes.length; i++) {
-			addApRow(attributes[i]['tag'], attributes[i]['val']);
+		for (var j = 0; j < tracks.length; j++) {
+			addApTrack(tracks[j].type);
+			for (var i = 0; i < tracks[j].attributes.length; i++) {
+				addApRow(tracks[j].attributes[i].tag, tracks[j].attributes[i].val);
+			}
 		}
 
 		goToStep(2);
@@ -246,6 +260,10 @@ $(document).ready(function () {
 	/* STEP 2 Build */
 
 	var deletedAttributes = [];
+
+	function addApTrack(type) {
+		$('#ap-main').append('<div class="ap-row ap-track">'+type+' Track</div>');
+	}
 
 	function addApRow(tag, val) {
 		$('#ap-main').append('<div class="ap-row"><div class="ap-col ap-col-tag"><input type="text" value="'+tag+'"></div><div class="ap-col ap-col-val"><input type="text" value="'+val+'"><i class="material-icons no-highlight">delete</i></div></div>');
@@ -321,23 +339,54 @@ $(document).ready(function () {
 	function testAgainstSpec(oDOM) {
 
 		var spec = {};
+		var currentTrack = '';
+
 		$('.ap-row').each(function () {
-			spec[$(this)[0].children[0].children[0].value] = $(this)[0].children[1].children[0].value;
+			if ($(this).hasClass('ap-track')) {
+				currentTrack = $(this)[0].textContent.split(' ')[0];
+				spec[currentTrack] = {};
+			}
+			else {
+				spec[currentTrack][$(this)[0].children[0].children[0].value] = $(this)[0].children[1].children[0].value;
+			}
 		});
 
-		var testAttributes = getAttributes(oDOM);
+		console.log(spec);
 
+		var testTracks = getAttributes(oDOM);
+
+		console.log(testTracks);
+
+		var specTrackCount = 0;
 		var specAttributeCount = 0;
-		var matchCount = 0;
-		for (var attribute in spec) {
-			specAttributeCount++;
-			for (var i = 0; i < testAttributes.length; i++) {
-				if (testAttributes[i]['tag'] === attribute) {
-					if (spec[attribute] === testAttributes[i]['val']) matchCount++;
-				} 
+		var attributeMatchCount = 0;
+		var trackMatchCount = 0;
+
+		for (var track in spec) {
+			specTrackCount++;
+
+			for (var j = 0; j < testTracks.length; j++) {
+
+				if (testTracks[j].type === track) {
+					trackMatchCount++;
+
+					for (var attribute in spec[track]) {
+						specAttributeCount++;
+
+						for (var i = 0; i < testTracks[j].attributes.length; i++) {
+
+							if (testTracks[j].attributes[i]['tag'] === attribute) {
+								if (spec[track][attribute] === testTracks[j].attributes[i]['val']) {
+									attributeMatchCount++;
+								}
+							}
+						}
+					}
+				}
 			}
 		}
-		if (specAttributeCount === matchCount) console.log('pass');
+
+		if (specTrackCount === trackMatchCount && specAttributeCount === attributeMatchCount) console.log('pass');
 		else console.log('fail');
 
 	}
