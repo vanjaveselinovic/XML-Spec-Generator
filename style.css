@@ -197,7 +197,7 @@ input, textarea, keygen, select, button {
 	width: calc(100% - 40px);
 	margin: 0 auto;
 	flex: 0 1 auto;
-	margin-bottom: 30px !important;
+	margin-bottom: 30px;
 	box-sizing: content-box;
 }
 
@@ -247,6 +247,7 @@ input, textarea, keygen, select, button {
 
 #paste-panel {
 	height: 150px;
+	margin-bottom: 50px;
 }
 
 #pp-left, #pp-right {
@@ -365,6 +366,11 @@ input, textarea, keygen, select, button {
 .rr-upload {
 	top: 57px;
 	right: 10px;
+}
+
+.text-under {
+	height: 50px;
+    line-height: 40px;
 }
 
 #generate-button {
