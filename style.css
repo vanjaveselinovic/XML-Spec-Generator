@@ -71,6 +71,22 @@ button:disabled {
 	opacity: 0.4;
 }
 
+.big-button {
+	font-size: 1em;
+	padding: 0 20px;
+	height: 40px;
+	line-height: 40px;
+	box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+.big-button:focus {
+	box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.big-button:active {
+	box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
 input[type="file"] {
 	width: 0.1px;
 	height: 0.1px;
@@ -105,6 +121,10 @@ input, textarea, keygen, select, button {
 	opacity: 0.4 !important;
 }
 
+.upload-widget.disabled-div {
+	opacity: 0.15 !important;
+}
+
 .invalid-input {
 }
 
@@ -122,6 +142,7 @@ input, textarea, keygen, select, button {
 	height: 100%;
 	z-index: 1;
 	color: white;
+	z-index: 10;
 }
 
 #sidebar-top {
@@ -357,6 +378,7 @@ input, textarea, keygen, select, button {
 	font-size: 0.5em;
 	position: absolute;
 	display: none;
+	z-index: 2;
 }
 
 .invalid-input .rule-required, .invalid-input + .rule-required {
@@ -381,22 +403,6 @@ input, textarea, keygen, select, button {
 .text-under {
 	height: 50px;
     line-height: 40px;
-}
-
-#generate-button {
-	font-size: 1em;
-	padding: 0 20px;
-	height: 40px;
-	line-height: 40px;
-	box-shadow: 0 0 10px rgba(0,0,0,0.2);
-}
-
-#generate-button:focus {
-	box-shadow: 0 0 10px rgba(0,0,0,0.5);
-}
-
-#generate-button:active {
-	box-shadow: 0 0 10px rgba(0,0,0,0.5);
 }
 
 #attributes-panel {

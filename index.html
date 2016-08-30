@@ -112,14 +112,14 @@
 							<div id="pp-selected-file" class="selected-file">No file selected</div>
 							<div class="pp-divider">OR</div>
 						</div>
-						<div class="rule-required rr-upload">*required</div>
+						<div class="rule-required rr-upload">*one required</div>
 					</div>
 					<div class="small text-under">
 						No upload takes place - the entire analysis is done in-browser locally on your computer.
 					</div>
 				</div>
 				<div class="section section-center">
-					<button id="generate-button" tabindex="23">Generate</button>
+					<button id="generate-button" class="big-button" tabindex="23">Generate</button>
 				</div>
 				<div id="attributes-panel" class="section section-panel section-fill disabled-div">
 					<div id="ap-header" class="header">
@@ -141,23 +141,28 @@
 					</div>
 				</div>
 			</div>
-			<div id="page3" class="page">
+			<div id="page3" class="page page-scrollable">
 				<div class="section section-panel">
 					<h2>Test your spec</h2>
 					<p>Here you can simulate uploads to test whether files will pass or fail the spec you have built. You can then go back to previous steps and make adjustments, or proceed to the next step.</p>
 					<p class="small">No upload takes place -  the entire test is done in-browser locally on your computer.</p>
+					<p class="small">Or, you can paste XML directly (XML generated from MediaInfo 0.70.0 ONLY).</p>
+
 				</div>
 				<div id="test-panel" class="section section-panel">
 					<textarea id="tp-xml" class="textarea-xml" placeholder="Paste valid MediaInfo XML here" tabindex="32"></textarea>
-					<div id="tp-upload" class="upload-widget">
+					<div id="tp-upload" class="upload-widget disabled-div">
 						<div class="upload-text">Choose a file to test</div>
-						<input type="file" id="tp-file" tabindex="31">
+						<input type="file" id="tp-file" tabindex="31" disabled>
 						<label for="tp-file" class="upload-button no-highlight">Browse</label>
 						<div id="tp-selected-file" class="selected-file">No file selected</div>
 						<div class="pp-divider">OR</div>
 					</div>
 				</div>
-				<div class="section section-panel section-fill">
+				<div class="section section-center">
+					<button id="test-button" class="big-button" tabindex="33">Test</button>
+				</div>
+				<div class="section section-panel">
 					results
 				</div>
 			</div>

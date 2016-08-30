@@ -190,6 +190,10 @@ $(document).ready(function () {
 
     	$('#pp-file').removeAttr('disabled');
     	$('#pp-upload').removeClass('disabled-div');
+
+    	$('#tp-file').removeAttr('disabled');
+    	$('#tp-upload').removeClass('disabled-div');
+
     	mediaInfoLoaded = true;
 	});
 
