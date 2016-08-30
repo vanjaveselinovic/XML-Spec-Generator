@@ -222,7 +222,7 @@ $(document).ready(function () {
 				}
 			}
 			else if ($('#pp-file')[0].files.length > 0) {
-			  	parseFile($('#pp-file')[0].files[0]);
+			  	parseFile($('#pp-file')[0].files[0], 1);
 			}
 		}
 		else {
@@ -356,7 +356,7 @@ $(document).ready(function () {
 			}
 		}
 		else if ($('#tp-file')[0].files.length > 0) {
-		  	parseFile($('#tp-file')[0].files[0]);
+		  	parseFile($('#tp-file')[0].files[0], 3);
 		}
 		else {
 			$('#test-panel').addClass('invalid-input');
