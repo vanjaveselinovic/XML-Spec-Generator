@@ -65,9 +65,9 @@ $(document).ready(function () {
 		var el = $(ev.target);
 
 		$('#pp-right').removeClass('invalid-input');
-		$(el[0].nextSibling.nextSibling.nextSibling.nextSibling).text(el[0].value.substr(12));
+		$('#pp-selected-file').text(el[0].value.substr(12));
 		if(el[0].value === '')
-			$(el[0].nextSibling.nextSibling.nextSibling.nextSibling).text('No file selected');
+			$('#pp-selected-file').text('No file selected');
 	});
 
 	var CHUNK_SIZE = 5 * 1024 * 1024;
@@ -283,6 +283,32 @@ $(document).ready(function () {
 	});
 
 	/* STEP 3 Test */
+
+	$('#tp-xml').focus(function () {
+		$('#test-panel').removeClass('invalid-input');
+	});
+
+	$('#tp-xml').change(function () {
+		if($('#tp-xml').val() !== '') {
+			$('#tp-upload').css('height', '0px');
+			if(mediaInfoLoaded)	$('#tp-file').attr('disabled', 'true');
+			$('#tp-xml').css('height', '150px');
+		}
+		else {
+			$('#tp-upload').css('height', '80px');
+			if(mediaInfoLoaded)	$('#tp-file').removeAttr('disabled');
+			$('#tp-xml').css('height', '150px');
+		}
+	});
+
+	$('#tp-file').change(function (ev) {
+		var el = $(ev.target);
+
+		$('#test-panel').removeClass('invalid-input');
+		$('#tp-selected-file').text(el[0].value.substr(12));
+		if(el[0].value === '')
+			$('#tp-selected-file').text('No file selected');
+	});
 
 	/* STEP 4 Submit */
 

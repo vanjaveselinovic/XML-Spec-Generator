@@ -44,8 +44,7 @@
 	color: hsl(208, 100%, 20%);
 }
 
-.page1 #rule-desc:focus,
-.page1 #rule-xml:focus {
+.page1 textarea:focus {
 	background: hsl(208, 100%, 98%);
 }
 
@@ -108,8 +107,7 @@
 	color: hsl(336, 100%, 20%);
 }
 
-.page2 #rule-desc:focus,
-.page2 #rule-xml:focus {
+.page2 textarea:focus {
 	background: hsl(336, 100%, 98%);
 }
 
@@ -172,8 +170,7 @@
 	color: hsl(43, 100%, 20%);
 }
 
-.page3 #rule-desc:focus,
-.page3 #rule-xml:focus {
+.page3 textarea:focus {
 	background: hsl(43, 100%, 98%);
 }
 
@@ -236,8 +233,7 @@
 	color: hsl(288, 100%, 20%);
 }
 
-.page4 #rule-desc:focus,
-.page4 #rule-xml:focus {
+.page4 textarea:focus {
 	background: hsl(288, 100%, 98%);
 }
 

@@ -101,12 +101,12 @@
 				<div id="paste-panel" class="section section-panel no-padding">
 					<div id="pp-left">
 						<input type="text" id="rule-name" placeholder="Rule name" tabindex="10"></input><div class="rule-required rr-name">*required</div>
-						<textarea id="rule-desc" placeholder="Rule description"tabindex="11"></textarea><div class="rule-required rr-desc">*required</div>
+						<textarea id="rule-desc" placeholder="Rule description" tabindex="11"></textarea><div class="rule-required rr-desc">*required</div>
 					</div>
 					<div id="pp-right">
-						<textarea id="rule-xml" placeholder="Paste valid MediaInfo XML here" tabindex="22"></textarea>
-						<div id="pp-upload" class="disabled-div">
-							<div id="pp-upload-text">Choose a file that you want to base the specification on.</div>
+						<textarea id="rule-xml" class="textarea-xml" placeholder="Paste valid MediaInfo XML here" tabindex="22"></textarea>
+						<div id="pp-upload" class="upload-widget disabled-div">
+							<div class="upload-text">Choose a file that you want to base the specification on.</div>
 							<input type="file" id="pp-file" disabled tabindex="21">
 							<label for="pp-file" class="upload-button no-highlight">Browse</label>
 							<div id="pp-selected-file" class="selected-file">No file selected</div>
@@ -141,14 +141,21 @@
 					</div>
 				</div>
 			</div>
-			<div id="page3" class="page disabled-div">
+			<div id="page3" class="page">
 				<div class="section section-panel">
 					<h2>Test your spec</h2>
 					<p>Here you can simulate uploads to test whether files will pass or fail the spec you have built. You can then go back to previous steps and make adjustments, or proceed to the next step.</p>
 					<p class="small">No upload takes place -  the entire test is done in-browser locally on your computer.</p>
 				</div>
-				<div class="section section-panel section-fill">
-					upload
+				<div id="test-panel" class="section section-panel">
+					<textarea id="tp-xml" class="textarea-xml" placeholder="Paste valid MediaInfo XML here" tabindex="32"></textarea>
+					<div id="tp-upload" class="upload-widget">
+						<div class="upload-text">Choose a file to test</div>
+						<input type="file" id="tp-file" tabindex="31">
+						<label for="tp-file" class="upload-button no-highlight">Browse</label>
+						<div id="tp-selected-file" class="selected-file">No file selected</div>
+						<div class="pp-divider">OR</div>
+					</div>
 				</div>
 				<div class="section section-panel section-fill">
 					results
