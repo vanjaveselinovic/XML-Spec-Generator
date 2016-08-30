@@ -34,50 +34,15 @@ $(document).ready(function () {
 		goToStep(4);
 	});
 
-	/* STEP 1 Generate */
-
-	$('#rule-name').focus(function () {
-		$('#rule-name').removeClass('invalid-input');
-	});
-
-	$('#rule-desc').focus(function () {
-		$('#rule-desc').removeClass('invalid-input');
-	});
-
-	$('#rule-xml').focus(function () {
-		$('#pp-right').removeClass('invalid-input');
-	});
-
-	$('#rule-xml').change(function () {
-		if($('#rule-xml').val() !== '') {
-			$('#pp-upload').css('height', '0px');
-			if(mediaInfoLoaded)	$('#pp-file').attr('disabled', 'true');
-			$('#rule-xml').css('height', '130px');
-		}
-		else {
-			$('#pp-upload').css('height', '65px');
-			if(mediaInfoLoaded)	$('#pp-file').removeAttr('disabled');
-			$('#rule-xml').css('height', '65px');
-		}
-	});
-
-	$('#pp-file').change(function (ev) {
-		var el = $(ev.target);
-
-		$('#pp-right').removeClass('invalid-input');
-		$('#pp-selected-file').text(el[0].value.substr(12));
-		if(el[0].value === '')
-			$('#pp-selected-file').text('No file selected');
-	});
+	/* MediaInfo */
 
 	var CHUNK_SIZE = 5 * 1024 * 1024;
 	var miLib, mi;
 	var processing = false;
 
 	var oParser = new DOMParser();
-	var oDOM = '';
 
-	function parseFile(file) {
+	function parseFile(file, step) {
 		if (processing) {
 			return;
 		}
@@ -108,7 +73,7 @@ $(document).ready(function () {
 			if ((state >> 3) % 2 !== 0 || offset >= fileSize) {
 				var result = mi.inform();
 				mi.close();
-				generateDone(result);
+				parseDone(result, step);
 				processing = false;
 				clearInterval(statusInterval);
 				return;
@@ -139,6 +104,68 @@ $(document).ready(function () {
 		seek(CHUNK_SIZE);
 	}
 
+	function parseDone(xmlFromMediaInfo, step) {
+		if (step === 1) {
+  	    	addAttributes(oParser.parseFromString(xmlFromMediaInfo, "text/xml"));
+			ga('send', 'event', 'Step 1 Generate', 'generation', 'success with file');
+		}
+		else if (step === 3) {
+			testAgainstSpec(oParser.parseFromString(xmlFromMediaInfo, "text/xml"));
+			ga('send', 'event', 'Step 3 Test', 'generation', 'success with file');
+		}
+	}
+
+	var miLib = MediaInfo(function() {
+		console.debug('MediaInfo ready');
+
+    	window['miLib'] = miLib; // debug
+    	mi = new miLib.MediaInfo();
+
+    	$('#pp-file').removeAttr('disabled');
+    	$('#pp-upload').removeClass('disabled-div');
+
+    	$('#tp-file').removeAttr('disabled');
+    	$('#tp-upload').removeClass('disabled-div');
+
+    	mediaInfoLoaded = true;
+	});
+
+	/* STEP 1 Generate */
+
+	$('#rule-name').focus(function () {
+		$('#rule-name').removeClass('invalid-input');
+	});
+
+	$('#rule-desc').focus(function () {
+		$('#rule-desc').removeClass('invalid-input');
+	});
+
+	$('#rule-xml').focus(function () {
+		$('#pp-right').removeClass('invalid-input');
+	});
+
+	$('#rule-xml').change(function () {
+		if ($('#rule-xml').val() !== '') {
+			$('#pp-upload').css('height', '0px');
+			if (mediaInfoLoaded)	$('#pp-file').attr('disabled', 'true');
+			$('#rule-xml').css('height', '130px');
+		}
+		else {
+			$('#pp-upload').css('height', '65px');
+			if (mediaInfoLoaded)	$('#pp-file').removeAttr('disabled');
+			$('#rule-xml').css('height', '65px');
+		}
+	});
+
+	$('#pp-file').change(function (ev) {
+		var el = $(ev.target);
+
+		$('#pp-right').removeClass('invalid-input');
+		$('#pp-selected-file').text(el[0].value.substr(12));
+		if (el[0].value === '')
+			$('#pp-selected-file').text('No file selected');
+	});
+
 	function getAttributes(oDOM) {
 		var attributes = [];
 
@@ -164,7 +191,7 @@ $(document).ready(function () {
 
 		var attributes = getAttributes(oDOM);
 
-		for(var i = 0; i < attributes.length; i++) {
+		for (var i = 0; i < attributes.length; i++) {
 			addApRow(attributes[i]['tag'], attributes[i]['val']);
 		}
 
@@ -176,27 +203,6 @@ $(document).ready(function () {
 	    }, 200);
 	}
 
-	function generateDone(xmlFromMediaInfo) {
-  	    addAttributes(oParser.parseFromString(xmlFromMediaInfo, "text/xml"));
-
-		ga('send', 'event', 'Step 1 Generate', 'generation', 'success with file');
-	}
-
-	var miLib = MediaInfo(function() {
-		console.debug('MediaInfo ready');
-
-    	window['miLib'] = miLib; // debug
-    	mi = new miLib.MediaInfo();
-
-    	$('#pp-file').removeAttr('disabled');
-    	$('#pp-upload').removeClass('disabled-div');
-
-    	$('#tp-file').removeAttr('disabled');
-    	$('#tp-upload').removeClass('disabled-div');
-
-    	mediaInfoLoaded = true;
-	});
-
 	$('#generate-button').click(function () {
 		if ($('#rule-name').val() !== ''
 			&& $('#rule-desc').val() !== ''
@@ -204,9 +210,9 @@ $(document).ready(function () {
 				|| $('#rule-xml').val() !== '')) {
 
 			if ($('#rule-xml').val() !== '') {
-				oDOM = oParser.parseFromString($('#rule-xml').val(), "text/xml");
+				var oDOM = oParser.parseFromString($('#rule-xml').val(), "text/xml");
 
-				if($(oDOM.documentElement)[0].outerHTML.indexOf('parsererror') === -1){
+				if ($(oDOM.documentElement)[0].outerHTML.indexOf('parsererror') === -1){
 					addAttributes(oDOM);
 
 					ga('send', 'event', 'Step 1 Generate', 'generation', 'success with xml');
@@ -215,14 +221,12 @@ $(document).ready(function () {
 					ga('send', 'event', 'Step 1 Generate', 'generation', 'failure - invalid xml');
 				}
 			}
-			else {
-			  	if ($('#pp-file')[0].files.length > 0) {
-			  		parseFile($('#pp-file')[0].files[0]);
-			    }
+			else if ($('#pp-file')[0].files.length > 0) {
+			  	parseFile($('#pp-file')[0].files[0]);
 			}
 		}
 		else {
-			if($('#rule-name').val() === '') {
+			if ($('#rule-name').val() === '') {
 				$('#rule-name').addClass('invalid-input');
 				ga('send', 'event', 'Step 1 Generate', 'generation', 'failure - no name');
 			}
@@ -253,7 +257,7 @@ $(document).ready(function () {
 
 			$(el[0].parentElement.parentElement).remove();
 
-			if($('.ap-row').length === 0) {
+			if ($('.ap-row').length === 0) {
 				$('#attributes-panel').addClass('disabled-div');
 				goToStep(1);
 				$('html, body, #wrapper').animate({
@@ -266,7 +270,7 @@ $(document).ready(function () {
 	};
 
 	$('#delete-all-button').click(function() {
-		if(confirm("Delete all attributes?")) {
+		if (confirm("Delete all attributes?")) {
 			$('.ap-row').each(function () {
 				$(this).remove();
 			});
@@ -293,14 +297,14 @@ $(document).ready(function () {
 	});
 
 	$('#tp-xml').change(function () {
-		if($('#tp-xml').val() !== '') {
+		if ($('#tp-xml').val() !== '') {
 			$('#tp-upload').css('height', '0px');
-			if(mediaInfoLoaded)	$('#tp-file').attr('disabled', 'true');
+			if (mediaInfoLoaded)	$('#tp-file').attr('disabled', 'true');
 			$('#tp-xml').css('height', '150px');
 		}
 		else {
 			$('#tp-upload').css('height', '80px');
-			if(mediaInfoLoaded)	$('#tp-file').removeAttr('disabled');
+			if (mediaInfoLoaded)	$('#tp-file').removeAttr('disabled');
 			$('#tp-xml').css('height', '150px');
 		}
 	});
@@ -310,8 +314,56 @@ $(document).ready(function () {
 
 		$('#test-panel').removeClass('invalid-input');
 		$('#tp-selected-file').text(el[0].value.substr(12));
-		if(el[0].value === '')
+		if (el[0].value === '')
 			$('#tp-selected-file').text('No file selected');
+	});
+
+	function testAgainstSpec(oDOM) {
+
+		var spec = {};
+		$('.ap-row').each(function () {
+			spec[$(this)[0].children[0].children[0].value] = $(this)[0].children[1].children[0].value;
+		});
+
+		var testAttributes = getAttributes(oDOM);
+
+		var specAttributeCount = 0;
+		var matchCount = 0;
+		for (var attribute in spec) {
+			specAttributeCount++;
+			for (var i = 0; i < testAttributes.length; i++) {
+				if (testAttributes[i]['tag'] === attribute) {
+					if (spec[attribute] === testAttributes[i]['val']) matchCount++;
+				} 
+			}
+		}
+		if (specAttributeCount === matchCount) console.log('pass');
+		else console.log('fail');
+
+	}
+
+	$('#test-button').click(function () {
+		if ($('#tp-xml').val() !== '') {
+			var oDOM = oParser.parseFromString($('#tp-xml').val(), "text/xml");
+
+			if ($(oDOM.documentElement)[0].outerHTML.indexOf('parsererror') === -1){
+				testAgainstSpec(oDOM);
+
+				ga('send', 'event', 'Step 3 Test', 'generation', 'success with xml');
+			}
+			else {
+				ga('send', 'event', 'Step 3 Test', 'generation', 'failure - invalid xml');
+			}
+		}
+		else if ($('#tp-file')[0].files.length > 0) {
+		  	parseFile($('#tp-file')[0].files[0]);
+		}
+		else {
+			$('#test-panel').addClass('invalid-input');
+			ga('send', 'event', 'Step 3 Test', 'generation', 'failure - no file or xml');
+		}
+
+		ga('send', 'event', 'Step 3 Test', 'click', 'test file/xml against spec');
 	});
 
 	/* STEP 4 Submit */
