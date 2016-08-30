@@ -108,6 +108,10 @@ input[type="file"] {
 	margin-left: 5px;
 }
 
+.selected-file {
+	display: inline-block;
+}
+
 input, textarea, keygen, select, button {
 	font-family: 'Open Sans', sans-serif;
 }
@@ -500,7 +504,6 @@ input, textarea, keygen, select, button {
 }
 
 #tp-selected-file {
-	display: inline;
 	margin-left: 5px;
 }
 
