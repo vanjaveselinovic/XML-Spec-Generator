@@ -223,20 +223,34 @@ $(document).ready(function () {
 			&& ($('#pp-file')[0].files.length > 0
 				|| $('#rule-xml').val() !== '')) {
 
-			if ($('#rule-xml').val() !== '') {
-				var oDOM = oParser.parseFromString($('#rule-xml').val(), "text/xml");
+			function doAddAttributes() {
+				if ($('#rule-xml').val() !== '') {
+					var oDOM = oParser.parseFromString($('#rule-xml').val(), "text/xml");
 
-				if ($(oDOM.documentElement)[0].outerHTML.indexOf('parsererror') === -1){
-					addAttributes(oDOM);
+					if ($(oDOM.documentElement)[0].outerHTML.indexOf('parsererror') === -1){
+						addAttributes(oDOM);
 
-					ga('send', 'event', 'Step 1 Generate', 'generation', 'success with xml');
+						ga('send', 'event', 'Step 1 Generate', 'generation', 'success with xml');
+					}
+					else {
+						ga('send', 'event', 'Step 1 Generate', 'generation', 'failure - invalid xml');
+					}
 				}
-				else {
-					ga('send', 'event', 'Step 1 Generate', 'generation', 'failure - invalid xml');
+				else if ($('#pp-file')[0].files.length > 0) {
+				  	parseFile($('#pp-file')[0].files[0], 1);
 				}
 			}
-			else if ($('#pp-file')[0].files.length > 0) {
-			  	parseFile($('#pp-file')[0].files[0], 1);
+
+			if($('#ap-main').children().length === 0) doAddAttributes();
+			else {
+				if (confirm("Overwrite existing attributes?")) {
+					$('#ap-main').empty();
+					doAddAttributes();
+					ga('send', 'event', 'Step 1 Generate', 'overwrite', 'accepted');
+				}
+				else {
+					ga('send', 'event', 'Step 1 Generate', 'overwrite', 'rejected');
+				}
 			}
 		}
 		else {
@@ -351,11 +365,7 @@ $(document).ready(function () {
 			}
 		});
 
-		console.log(spec);
-
 		var testTracks = getAttributes(oDOM);
-
-		console.log(testTracks);
 
 		var specTrackCount = 0;
 		var specAttributeCount = 0;
@@ -386,8 +396,12 @@ $(document).ready(function () {
 			}
 		}
 
-		if (specTrackCount === trackMatchCount && specAttributeCount === attributeMatchCount) console.log('pass');
-		else console.log('fail');
+		if (specTrackCount === trackMatchCount && specAttributeCount === attributeMatchCount) {
+			console.log('pass');
+		}
+		else {
+			console.log('fail');
+		}
 
 	}
 
