@@ -16,8 +16,6 @@ $(document).ready(function () {
 		ga('send', 'event', 'Sidebar', 'click', 'step'+n);
 	};
 
-	var currentStep = 1;
-
 	$('#step1').click(function () {
 		goToStep(1);
 	});
@@ -351,7 +349,6 @@ $(document).ready(function () {
 	});
 
 	function testAgainstSpec(oDOM) {
-
 		var spec = {};
 		var currentTrack = '';
 
@@ -367,27 +364,16 @@ $(document).ready(function () {
 
 		var testTracks = getAttributes(oDOM);
 
-		var specTrackCount = 0;
-		var specAttributeCount = 0;
-		var attributeMatchCount = 0;
-		var trackMatchCount = 0;
+		var failSpec = JSON.parse(JSON.stringify(spec));
 
 		for (var track in spec) {
-			specTrackCount++;
-
 			for (var j = 0; j < testTracks.length; j++) {
-
 				if (testTracks[j].type === track) {
-					trackMatchCount++;
-
 					for (var attribute in spec[track]) {
-						specAttributeCount++;
-
 						for (var i = 0; i < testTracks[j].attributes.length; i++) {
-
 							if (testTracks[j].attributes[i]['tag'] === attribute) {
 								if (spec[track][attribute] === testTracks[j].attributes[i]['val']) {
-									attributeMatchCount++;
+									delete failSpec[track][attribute];
 								}
 							}
 						}
@@ -396,13 +382,51 @@ $(document).ready(function () {
 			}
 		}
 
-		if (specTrackCount === trackMatchCount && specAttributeCount === attributeMatchCount) {
-			console.log('pass');
-		}
-		else {
-			console.log('fail');
+		for (var track in spec) {
+			if (Object.keys(failSpec[track]).length === 0) delete failSpec[track];
 		}
 
+		if (Object.keys(failSpec).length === 0) {
+			$('#fail-panel').css('display', 'none');
+			$('#pass-panel').css('display', 'block');
+		}
+		else {
+			function addMissingAttribute(tag) {
+				$('#fail-attributes').append('<div class="fail-attribute">'+tag+'<i class="material-icons attribute-missing-icon">block</i></div>');
+			}
+
+			function addWrongAttribute(tag) {
+				$('#fail-attributes').append('<div class="fail-attribute">'+tag+'<i class="material-icons attribute-wrong-icon">error_outline</i></div>');
+			}
+
+			var attributesMissing = JSON.parse(JSON.stringify(failSpec));
+
+			for (var track in failSpec) {
+				for (var j = 0; j < testTracks.length; j++) {
+					if (testTracks[j].type === track) {
+						for (var attribute in failSpec[track]) {
+							for (var i = 0; i < testTracks[j].attributes.length; i++) {
+								if (testTracks[j].attributes[i]['tag'] === attribute) {
+									delete attributesMissing[track][attribute];
+								}
+							}
+						}
+					}
+				}
+			}
+
+			$('#fail-attributes').empty();
+
+			for (var track in failSpec) {
+				for (var attribute in failSpec[track]) {
+					if (attribute in attributesMissing[track]) addMissingAttribute(attribute);
+					else addWrongAttribute(attribute);
+				}
+			}
+
+			$('#pass-panel').css('display', 'none');
+			$('#fail-panel').css('display', 'block');
+		}
 	}
 
 	$('#test-button').click(function () {

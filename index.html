@@ -141,13 +141,12 @@
 					</div>-->
 				</div>
 			</div>
-			<div id="page3" class="page page-scrollable disabled-div">
+			<div id="page3" class="page page-scrollable disabled-dv">
 				<div class="section section-panel">
 					<h2>Test your spec</h2>
 					<p>Here you can simulate uploads to test whether files will pass or fail the spec you have built. You can then go back to previous steps and make adjustments, or proceed to the next step.</p>
 					<p class="small">No upload takes place -  the entire test is done in-browser locally on your computer.</p>
 					<p class="small">Or, you can paste XML directly (XML generated from MediaInfo 0.70.0 ONLY).</p>
-
 				</div>
 				<div id="test-panel" class="section section-panel">
 					<textarea id="tp-xml" class="textarea-xml" placeholder="Paste valid MediaInfo XML here" tabindex="32"></textarea>
@@ -162,8 +161,28 @@
 				<div class="section section-center">
 					<button id="test-button" class="big-button" tabindex="33">Test</button>
 				</div>
-				<div class="section section-panel">
-					results
+				<div id="pass-panel" class="section section-panel">
+					<div class="rp-box">
+						<i class="material-icons rp-big-icon">verified_user</i>
+						<div class="rp-title">Pass</div>
+						<p class="rp-subtitle">The test file passes the spec you have built.</p>
+					</div>
+					<p>Yay.</p>
+				</div>
+
+				<div id="fail-panel" class="section section-panel">
+					<div class="rp-box">
+						<i class="material-icons rp-big-icon">block</i>
+						<div class="rp-title">Fail</div>
+						<p class="rp-subtitle">The test file does not pass the spec you have built.</p>
+					</div>
+					<p>The following attributes are causing the test file to fail:</p>
+					<p class="small">
+						Legend:<br>
+						<i class="material-icons attribute-missing-icon">block</i> - The attribute is missing from the test file.<br>
+						<i class="material-icons attribute-wrong-icon">error_outline</i> - The attribute is present in the test file but has the wrong value.
+					</p>
+					<div id="fail-attributes"></div>
 				</div>
 			</div>
 			<div id="page4" class="page disabled-div">

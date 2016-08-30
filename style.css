@@ -521,6 +521,63 @@ input, textarea, keygen, select, button {
 	padding: 20px 0;
 }
 
+#result-panel {
+
+}
+
+.rp-box {
+    width: calc(100% + 40px);
+    margin: -20px 0 0 -20px;
+    padding: 20px;
+    color: white;
+}
+
+#pass-panel, #fail-panel {
+	display: none;
+}
+
+#pass-panel .rp-box {
+	background: hsl(150, 100%, 40%);
+}
+
+#fail-panel .rp-box {
+	background: hsl(4, 100%, 60%);
+}
+
+.rp-big-icon {
+	font-size: 5em !important;
+    float: left;
+}
+
+.rp-title {
+	font-size: 2.5em;
+    height: 2.5rem;
+    line-height: 2.5rem;
+    margin-top: 0.625rem;
+}
+
+.rp-subtitle {
+	margin: 0;
+}
+
+.fail-attribute, .fail-attribute i {
+	height: 1.5em;
+	line-height: 1.5em;
+}
+
+.fail-attribute i {
+    position: absolute;
+    margin-left: 5px;
+}
+
+.attribute-missing-icon {
+	color: hsl(4, 100%, 60%);
+}
+
+.attribute-wrong-icon {
+	color: hsl(43, 100%, 45%);
+}
+
 @media (max-width: 640px) {
 	#wrapper {
 		width: 100%;
