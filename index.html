@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>XML Spec Generator</title>
+		<title>CloudSpeX Rule Generator</title>
 
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -28,7 +28,10 @@
 
 	<body class="page1">
 		<div id="sidebar">
-			<div id="sidebar-top">Spec Builder</div>
+			<div id="sidebar-top"><span>
+				<i class="material-icons">cloud_queue</i><i class="material-icons">security</i><br>
+				CloudSpeX Rule Generator
+			</span></div>
 			<a href="#page1" class="sidebar-step current-step" id="step1" tabindex="1">
 				<h4>Step 1</h4>
 				<h3>Generate</h3>
@@ -66,7 +69,7 @@
 					<div class="instruction">
 						<h3>Step 1</h3>
 						<div class="instruction-text">
-							<p><strong>Generate:</strong> Provide a file that conforms to the specification you want to support.</p>
+							<p><strong>Generate:</strong> Provide a file that conforms to the rule you want to support.</p>
 							<p class="small">No upload takes place - the entire analysis is done in-browser locally on your computer.</p>
 							<p class="small">
 								Or, you can paste XML directly (XML generated from MediaInfo 0.70.0 ONLY). Example:
@@ -79,20 +82,20 @@
 					<div class="instruction">
 						<h3>Step 2</h3>
 						<div class="instruction-text">
-							<p><strong>Build:</strong> Edit, add, and/or remove attributes extracted from your example file/XML.</p>
+							<p><strong>Build:</strong> Edit or remove attributes extracted from your example file/XML.</p>
 						</div>
 					</div>
 					<div class="instruction">
 						<h3>Step 3</h3>
 						<div class="instruction-text">
-							<p><strong>Test</strong> the spec with other files that either conform or fail your specification. If necessary, go back to Step 1 and/or 2 and make adjustments.</p>
+							<p><strong>Test</strong> the rule with other files that either conform or fail your specification. If necessary, go back to Step 1 and/or 2 and make adjustments.</p>
 							<p class="small">No upload takes place - the entire test process is done in-browser locally on your computer.</p>
 						</div>
 					</div>
 					<div class="instruction">
 						<h3>Step 4</h3>
 						<div class="instruction-text">
-							<p><strong>Submit</strong> your completed spec to Signiant.</p>
+							<p><strong>Submit</strong> your completed rule to Signiant.</p>
 						</div>
 					</div>
 				</div>
@@ -106,7 +109,7 @@
 					<div id="pp-right">
 						<textarea id="rule-xml" class="textarea-xml" placeholder="Paste valid MediaInfo XML here" tabindex="22"></textarea>
 						<div id="pp-upload" class="upload-widget disabled-div">
-							<div class="upload-text">Choose a file that you want to base the specification on.</div>
+							<div class="upload-text">Choose a file that you want to base the rule on.</div>
 							<input type="file" id="pp-file" disabled tabindex="21">
 							<label for="pp-file" class="upload-button no-highlight">Browse</label>
 							<div id="pp-selected-file" class="selected-file">No file selected</div>
@@ -146,8 +149,8 @@
 			</div>
 			<div id="page3" class="page page-scrollable disabled-div">
 				<div class="section section-panel">
-					<h2>Test your spec</h2>
-					<p>Here you can simulate uploads to test whether files will pass or fail the spec you have built. You can then go back to previous steps and make adjustments, or proceed to the next step.</p>
+					<h2>Test your rule</h2>
+					<p>Here you can simulate uploads to test whether files will pass or fail the rule you have built. You can then go back to previous steps and make adjustments, or proceed to the next step.</p>
 					<p class="small">Or, you can paste XML directly (XML generated from MediaInfo 0.70.0 ONLY).</p>
 					<p class="small">No upload takes place -  the entire test is done in-browser locally on your computer.</p>
 				</div>
@@ -170,15 +173,15 @@
 					<div class="rp-box">
 						<i class="material-icons rp-big-icon">verified_user</i>
 						<div class="rp-title">Pass</div>
-						<p class="rp-subtitle">The test file passes the spec you have built.</p>
+						<p class="rp-subtitle">The test file passes the rule you have built.</p>
 					</div>
-					<p>Yay.</p>
+					<p>All the attributes in the rule are present with the correct values in the test file.</p>
 				</div>
 				<div id="fail-panel" class="section section-panel">
 					<div class="rp-box">
 						<i class="material-icons rp-big-icon">block</i>
 						<div class="rp-title">Fail</div>
-						<p class="rp-subtitle">The test file does not pass the spec you have built.</p>
+						<p class="rp-subtitle">The test file does not pass the rule you have built.</p>
 					</div>
 					<p>The following attributes are causing the test file to fail:</p>
 					<p class="small">
@@ -191,15 +194,15 @@
 			</div>
 			<div id="page4" class="page disabled-div">
 				<div class="section section-panel section">
-					<h2>Submit your spec for consideration</h2>
-					<p>Click the button below to download your completed spec as an XML file.</p>
+					<h2>Submit your rule for consideration</h2>
+					<p>Click the button below to download your completed rule as an XML file.</p>
 				</div>
 				<div class="section section-center">
 					<button id="download-button" class="big-button" disabled>Download</button>
 				</div>
 				<div class="section section-panel">
-					<p>Click the button below to send your spec to us for consideration.</p>
-					<p class="small">Submssion is done via email. You must attach the downlaoded XML file to the email.</p>
+					<p>Click the button below to send your rule to us by email for consideration.</p>
+					<p class="small">You must attach the downloaded XML file to the email.</p>
 				</div>
 				<div class="section section-center">
 					<button id="submit-button" class="big-button" disabled>Submit</send>

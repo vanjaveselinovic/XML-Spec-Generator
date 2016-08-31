@@ -187,9 +187,16 @@ input, textarea, keygen, select, button {
 
 #sidebar-top {
 	height: 150px;
-	line-height: 150px;
 	text-align: center;
 	font-family: 'Slabo 27px', monospace;
+	position: relative;
+}
+
+#sidebar-top span {
+	display: block;
+	position: absolute;
+	top: 50%;
+	transform: translate(0, -50%);
 }
 
 .sidebar-step {
