@@ -173,19 +173,21 @@ $(document).ready(function () {
 		for (var j = 0; j < elements.length; j++) {
 			track = $(elements[j])[0];
 
-			tracks.push({
-				type: $(track)[0].attributes.type.value,
-				attributes: []
-			});
+			if ($(track)[0].children.length !== 0 && $(track)[0].attributes.type !== undefined) {
+				tracks.push({
+					type: $(track)[0].attributes.type.value,
+					attributes: []
+				});
 
-			for (var i = 0; i < $(track)[0].children.length; i++) {
-				attribute = $($(track)[0].children[i])[0];
+				for (var i = 0; i < $(track)[0].children.length; i++) {
+					attribute = $($(track)[0].children[i])[0];
 
-				if (attribute.children.length === 0) {
-					tracks[j].attributes.push({
-						tag: attribute.tagName,
-						val: attribute.textContent
-					});
+					if (attribute.children.length === 0) {
+						tracks[j].attributes.push({
+							tag: attribute.tagName,
+							val: attribute.textContent
+						});
+					}
 				}
 			}
 		}
