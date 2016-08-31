@@ -131,15 +131,15 @@ $(document).ready(function () {
 	/* STEP 1 Generate */
 
 	$('#rule-name').focus(function () {
-		$('#rule-name').removeClass('invalid-input');
+		$('#rule-name').removeClass('missing-input');
 	});
 
 	$('#rule-desc').focus(function () {
-		$('#rule-desc').removeClass('invalid-input');
+		$('#rule-desc').removeClass('missing-input');
 	});
 
 	$('#rule-xml').focus(function () {
-		$('#pp-right').removeClass('invalid-input');
+		$('#pp-right').removeClass('missing-input invalid-input');
 	});
 
 	$('#rule-xml').change(function () {
@@ -158,7 +158,7 @@ $(document).ready(function () {
 	$('#pp-file').change(function (ev) {
 		var el = $(ev.target);
 
-		$('#pp-right').removeClass('invalid-input');
+		$('#pp-right').removeClass('missing-input');
 		$('#pp-selected-file').text(el[0].value.substr(12));
 		if (el[0].value === '')
 			$('#pp-selected-file').text('No file selected');
@@ -167,79 +167,61 @@ $(document).ready(function () {
 	function getAttributes(oDOM) {
 		var tracks = [];
 
-		var elements = oDOM.getElementsByTagName("*");
+		var elements = oDOM.getElementsByTagName("track");
 
-		var j = -1;
+		var track, attribute;
+		for (var j = 0; j < elements.length; j++) {
+			track = $(elements[j])[0];
 
-		var element;
-		for (var i = 0; i < elements.length; i++) {
+			tracks.push({
+				type: $(track)[0].attributes.type.value,
+				attributes: []
+			});
 
-			element = $(elements[i])[0];
+			for (var i = 0; i < $(track)[0].children.length; i++) {
+				attribute = $($(track)[0].children[i])[0];
 
-			if($(element)[0].tagName === 'track') {
-				tracks.push({
-					type: $(element)[0].attributes.type.value,
-					attributes: []
-				});
-				j++;
+				if (attribute.children.length === 0) {
+					tracks[j].attributes.push({
+						tag: attribute.tagName,
+						val: attribute.textContent
+					});
+				}
 			}
+		}
 
-			if (element.children.length === 0) {
-				tracks[j].attributes.push({
-					tag: element.tagName,
-					val: element.textContent
-				});
-			}
+		if (tracks.length === 0) {
+
 		}
 
 		return tracks;
 	}
 
 	function addAttributes (oDOM) {
-  	    $('#attributes-panel').removeClass('disabled-div');
-
 		var tracks = getAttributes(oDOM);
 
-		for (var j = 0; j < tracks.length; j++) {
-			addApTrack(tracks[j].type);
-			for (var i = 0; i < tracks[j].attributes.length; i++) {
-				addApRow(tracks[j].attributes[i].tag, tracks[j].attributes[i].val);
+		function doAddAttributes () {
+  	    	$('#attributes-panel').removeClass('disabled-div');
+
+			for (var j = 0; j < tracks.length; j++) {
+				addApTrack(tracks[j].type);
+				for (var i = 0; i < tracks[j].attributes.length; i++) {
+					addApRow(tracks[j].attributes[i].tag, tracks[j].attributes[i].val);
+				}
 			}
+
+			goToStep(2);
+			$('#page3').removeClass('disabled-div');
+			$('#page4').removeClass('disabled-div');
+			$('html, body, #wrapper').animate({
+		        scrollTop: $("#page2").offset().top
+		    }, 200);
+
+		    ga('send', 'event', 'Step 1 Generate', 'generation', 'success with xml');
 		}
 
-		goToStep(2);
-		$('#page3').removeClass('disabled-div');
-		$('#page4').removeClass('disabled-div');
-		$('html, body, #wrapper').animate({
-	        scrollTop: $("#page2").offset().top
-	    }, 200);
-	}
-
-	$('#generate-button').click(function () {
-		if ($('#rule-name').val() !== ''
-			&& $('#rule-desc').val() !== ''
-			&& ($('#pp-file')[0].files.length > 0
-				|| $('#rule-xml').val() !== '')) {
-
-			function doAddAttributes() {
-				if ($('#rule-xml').val() !== '') {
-					var oDOM = oParser.parseFromString($('#rule-xml').val(), "text/xml");
-
-					if ($(oDOM.documentElement)[0].outerHTML.indexOf('parsererror') === -1){
-						addAttributes(oDOM);
-
-						ga('send', 'event', 'Step 1 Generate', 'generation', 'success with xml');
-					}
-					else {
-						ga('send', 'event', 'Step 1 Generate', 'generation', 'failure - invalid xml');
-					}
-				}
-				else if ($('#pp-file')[0].files.length > 0) {
-				  	parseFile($('#pp-file')[0].files[0], 1);
-				}
-			}
-
-			if($('#ap-main').children().length === 0) doAddAttributes();
+		if (tracks.length > 0) {
+		    if($('#ap-main').children().length === 0) doAddAttributes();
 			else {
 				if (confirm("Overwrite existing attributes?")) {
 					$('#ap-main').empty();
@@ -252,16 +234,45 @@ $(document).ready(function () {
 			}
 		}
 		else {
+			$('#pp-right').addClass('invalid-input');
+			ga('send', 'event', 'Step 1 Generate', 'generation', 'failure - invalid xml');
+		}
+	}
+
+	$('#generate-button').click(function () {
+		if ($('#rule-name').val() !== ''
+			&& $('#rule-desc').val() !== ''
+			&& ($('#pp-file')[0].files.length > 0
+				|| $('#rule-xml').val() !== '')) {
+
+			if ($('#rule-xml').val() !== '') {
+				var oDOM = oParser.parseFromString($('#rule-xml').val(), "text/xml");
+
+				if ($(oDOM.documentElement)[0].outerHTML.indexOf('parsererror') === -1){
+					addAttributes(oDOM);
+				}
+				else {
+					$('#pp-right').addClass('invalid-input');
+
+					ga('send', 'event', 'Step 1 Generate', 'generation', 'failure - invalid xml');
+				}
+			}
+			else if ($('#pp-file')[0].files.length > 0) {
+			  	parseFile($('#pp-file')[0].files[0], 1);
+			}
+
+		}
+		else {
 			if ($('#rule-name').val() === '') {
-				$('#rule-name').addClass('invalid-input');
+				$('#rule-name').addClass('missing-input');
 				ga('send', 'event', 'Step 1 Generate', 'generation', 'failure - no name');
 			}
 			if ($('#rule-desc').val() === '') {
-				$('#rule-desc').addClass('invalid-input');
+				$('#rule-desc').addClass('missing-input');
 				ga('send', 'event', 'Step 1 Generate', 'generation', 'failure - no description');
 			}
 			if ($('#pp-file')[0].files.length <= 0 && $('#rule-xml').val() === '') {
-				$('#pp-right').addClass('invalid-input');
+				$('#pp-right').addClass('missing-input');
 				ga('send', 'event', 'Step 1 Generate', 'generation', 'failure - no file or xml');
 			}
 		}
@@ -325,7 +336,7 @@ $(document).ready(function () {
 	/* STEP 3 Test */
 
 	$('#tp-xml').focus(function () {
-		$('#test-panel').removeClass('invalid-input');
+		$('#test-panel').removeClass('missing-input');
 	});
 
 	$('#tp-xml').change(function () {
@@ -344,7 +355,7 @@ $(document).ready(function () {
 	$('#tp-file').change(function (ev) {
 		var el = $(ev.target);
 
-		$('#test-panel').removeClass('invalid-input');
+		$('#test-panel').removeClass('missing-input');
 		$('#tp-selected-file').text(el[0].value.substr(12));
 		if (el[0].value === '')
 			$('#tp-selected-file').text('No file selected');
@@ -448,7 +459,7 @@ $(document).ready(function () {
 		  	parseFile($('#tp-file')[0].files[0], 3);
 		}
 		else {
-			$('#test-panel').addClass('invalid-input');
+			$('#test-panel').addClass('missing-input');
 			ga('send', 'event', 'Step 3 Test', 'generation', 'failure - no file or xml');
 		}
 

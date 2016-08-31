@@ -129,7 +129,7 @@ input, textarea, keygen, select, button {
 	opacity: 0.15 !important;
 }
 
-.invalid-input {
+.missing-input {
 }
 
 .no-highlight {
@@ -385,7 +385,7 @@ input, textarea, keygen, select, button {
 	z-index: 2;
 }
 
-.invalid-input .rule-required, .invalid-input + .rule-required {
+.missing-input .rule-required, .missing-input + .rule-required {
 	display: block;
 }
 
@@ -402,6 +402,20 @@ input, textarea, keygen, select, button {
 .rr-upload {
 	top: 57px;
 	right: 10px;
+}
+
+.rr-xml {
+	top: 10px;
+	right: 10px;
+	background: rgba(255,255,255,0.85);
+}
+
+.missing-input .rr-xml {
+	display: none;
+}
+
+.invalid-input .rr-xml {
+	display: block;
 }
 
 .text-under {
