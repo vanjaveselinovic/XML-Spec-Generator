@@ -244,6 +244,13 @@ input, textarea, keygen, select, button {
 	height: initial;
 }
 
+#page1 {
+	padding-bottom: 0;
+}
+
+#page2 {
+}
+
 .section {
 	max-width: 600px;
 	width: calc(100% - 40px);
@@ -513,6 +520,7 @@ input, textarea, keygen, select, button {
 	height: 150px;
 	display: flex;
 	flex-flow: column-reverse;
+	position: relative;
 }
 
 #tp-upload {
@@ -533,6 +541,24 @@ input, textarea, keygen, select, button {
 
 #test-panel .pp-divider {
 	padding: 20px 0;
+}
+
+.rr-tp-upload {
+	left: 20px;
+    top: 64px;
+}
+
+.missing-input .rr-tp-xml {
+	display: none;
+}
+
+.invalid-input .rr-tp-xml {
+	display: block;
+}
+
+.rr-tp-xml {
+	top: 20px;
+	right: 20px;
 }
 
 #result-panel {

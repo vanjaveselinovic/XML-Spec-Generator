@@ -48,7 +48,7 @@
 			<div id="sidebar-bottom" class="no-highlight"><span>About</span></div>
 		</div>
 		<div id="wrapper">
-			<div id="page1" class="page page-scrollable">
+			<div id="page0" class="page page-scrollable">
 				<div class="section small">
 					<h2>CloudSpeX</h2>
 					<p>Signiant's CloudSpeX application dramatically lowers rejection rates associated with the receipt of improperly formatted files, and helps to manage the volume and complexity of today's multiplatform delivery specifications.</p>
@@ -97,7 +97,7 @@
 					</div>
 				</div>
 			</div>
-			<div id="page2" class="page">
+			<div id="page1" class="page page-scrollable">
 				<div id="paste-panel" class="section section-panel no-padding">
 					<div id="pp-left">
 						<input type="text" id="rule-name" placeholder="Rule name" tabindex="10"></input><div class="rule-required rr-name">*required</div>
@@ -122,7 +122,9 @@
 				<div class="section section-center">
 					<button id="generate-button" class="big-button" tabindex="23">Generate</button>
 				</div>
-				<div id="attributes-panel" class="section section-panel section-fill disabled-div">
+			</div>
+			<div id="page2" class="page disabled-div">
+				<div id="attributes-panel" class="section section-panel section-fill">
 					<div id="ap-header" class="header">
 						<div class="ap-col">
 							<i class="material-icons">label</i>
@@ -150,7 +152,7 @@
 					<p class="small">Or, you can paste XML directly (XML generated from MediaInfo 0.70.0 ONLY).</p>
 				</div>
 				<div id="test-panel" class="section section-panel">
-					<textarea id="tp-xml" class="textarea-xml" placeholder="Paste valid MediaInfo XML here" tabindex="32"></textarea>
+					<textarea id="tp-xml" class="textarea-xml" placeholder="Paste valid MediaInfo XML here" tabindex="32" disabled></textarea>
 					<div id="tp-upload" class="upload-widget disabled-div">
 						<div class="upload-text">Choose a file to test</div>
 						<input type="file" id="tp-file" tabindex="31" disabled>
@@ -158,9 +160,11 @@
 						<div id="tp-selected-file" class="selected-file">No file selected</div>
 						<div class="pp-divider">OR</div>
 					</div>
+					<div class="rule-required rr-tp-upload">*one required</div>
+					<div class="rule-required rr-tp-xml">*invalid xml</div>
 				</div>
 				<div class="section section-center">
-					<button id="test-button" class="big-button" tabindex="33">Test</button>
+					<button id="test-button" class="big-button" tabindex="33" disabled>Test</button>
 				</div>
 				<div id="pass-panel" class="section section-panel">
 					<div class="rp-box">
@@ -170,7 +174,6 @@
 					</div>
 					<p>Yay.</p>
 				</div>
-
 				<div id="fail-panel" class="section section-panel">
 					<div class="rp-box">
 						<i class="material-icons rp-big-icon">block</i>
