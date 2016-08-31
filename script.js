@@ -287,8 +287,10 @@ $(document).ready(function () {
 
 			$(el[0].parentElement.parentElement).remove();
 
-			if ($('.ap-row').length === 0) {
+			if ($('.ap-row').length - $('.ap-track').length === 0) {
 				$('#attributes-panel').addClass('disabled-div');
+				$('#page3').addClass('disabled-div');
+				$('#page4').addClass('disabled-div');
 				goToStep(1);
 				$('html, body, #wrapper').animate({
 	                scrollTop: $("#page2").offset().top
@@ -391,12 +393,12 @@ $(document).ready(function () {
 			$('#pass-panel').css('display', 'block');
 		}
 		else {
-			function addMissingAttribute(tag) {
-				$('#fail-attributes').append('<div class="fail-attribute">'+tag+'<i class="material-icons attribute-missing-icon">block</i></div>');
+			function addMissingAttribute(track, tag) {
+				$('#fail-attributes').append('<div class="fail-attribute"><div class="fail-track">'+track+'</div>'+tag+'<i class="material-icons attribute-missing-icon">block</i></div>');
 			}
 
-			function addWrongAttribute(tag) {
-				$('#fail-attributes').append('<div class="fail-attribute">'+tag+'<i class="material-icons attribute-wrong-icon">error_outline</i></div>');
+			function addWrongAttribute(track, tag) {
+				$('#fail-attributes').append('<div class="fail-attribute"><div class="fail-track">'+track+'</div>'+tag+'<i class="material-icons attribute-wrong-icon">error_outline</i></div>');
 			}
 
 			var attributesMissing = JSON.parse(JSON.stringify(failSpec));
@@ -419,8 +421,8 @@ $(document).ready(function () {
 
 			for (var track in failSpec) {
 				for (var attribute in failSpec[track]) {
-					if (attribute in attributesMissing[track]) addMissingAttribute(attribute);
-					else addWrongAttribute(attribute);
+					if (attribute in attributesMissing[track]) addMissingAttribute(track, attribute);
+					else addWrongAttribute(track, attribute);
 				}
 			}
 

@@ -560,8 +560,19 @@ input, textarea, keygen, select, button {
 	margin: 0;
 }
 
+.fail-track {
+	font-size: 0.8em;
+	color: grey;
+	background: rgba(0,0,0,0.05);
+	border-radius: 2px;
+	float: left;
+	margin-right: 10px;
+	padding: 0 10px;
+	text-transform: uppercase;
+}
+
 .fail-attribute, .fail-attribute i {
-	height: 1.5em;
+	height: 2em;
 	line-height: 1.5em;
 }
 
