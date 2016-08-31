@@ -471,6 +471,7 @@ $(document).ready(function () {
 	/* STEP 4 Submit */
 
 	$('#download-button').click(function () {
+		goToStep(4);
 		var xmlString = '';
 
 		xmlString += '<rule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="IMX30" xsi:noNamespaceSchemaLocation="multiType.xsd"><validator>com.signiant.compliance.validation.impl.MultiTypeFileValidator</validator>';

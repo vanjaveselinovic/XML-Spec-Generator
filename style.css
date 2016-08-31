@@ -602,6 +602,7 @@ input, textarea, keygen, select, button {
 .rr-tp-xml {
 	top: 20px;
 	right: 20px;
+	background: rgba(255,255,255,0.85);
 }
 
 #result-panel {
