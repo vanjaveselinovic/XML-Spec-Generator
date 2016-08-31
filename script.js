@@ -211,7 +211,7 @@ $(document).ready(function () {
 
 			goToStep(2);
 			$('#page3, #page4').removeClass('disabled-div');
-			$('#tp-xml, #test-button').removeAttr('disabled');
+			$('#tp-xml, #test-button, #download-button, #submit-button').removeAttr('disabled');
 			if (mediaInfoLoaded) $('#tp-file').removeAttr('disabled');
 
 			$('html, body, #wrapper').animate({
@@ -470,6 +470,57 @@ $(document).ready(function () {
 
 	/* STEP 4 Submit */
 
+	$('#download-button').click(function () {
+		var xmlString = '';
+
+		xmlString += '<rule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="IMX30" xsi:noNamespaceSchemaLocation="multiType.xsd"><validator>com.signiant.compliance.validation.impl.MultiTypeFileValidator</validator>';
+
+		var firstTrack = true;
+		$('.ap-row').each(function () {
+			if ($(this).hasClass('ap-track')) {
+				if (firstTrack) {
+					xmlString+='<track type="'+$(this)[0].textContent.split(' ')[0]+'">';
+					firstTrack = false;
+				}
+				else {
+					xmlString+='</track><track type="'+$(this)[0].textContent.split(' ')[0]+'">';
+				}
+			}
+			else {
+				xmlString+='<attribute name="'+$(this)[0].children[0].children[0].value+'"><value>';
+				xmlString+=$(this)[0].children[1].children[0].value;
+				xmlString+='</value></attribute>';
+			}
+		});
+
+		xmlString += '</track></rule>';
+
+		var a = document.createElement('a');
+		a.style.display = 'none';
+		var blob = new Blob([xmlString], {type: 'text/xml'});
+		var filename = 'CloudSpeX Rule Generator - '+$('#rule-name').val()+'.xml';
+
+	    if (window.navigator.msSaveOrOpenBlob)
+	        window.navigator.msSaveOrOpenBlob(blob, filename);
+	    else {
+	        var url = URL.createObjectURL(blob);
+	        a.href = url;
+	        a.download = filename;
+	        document.body.appendChild(a);
+	        a.click();
+	        setTimeout(function() {
+	            document.body.removeChild(a);
+	            window.URL.revokeObjectURL(url);  
+	        }, 0); 
+	    }
+	});
+
+	$('#submit-button').click(function () {
+		var email = 'temp@temp.com';
+		var subject = '?subject=CloudSpeX Generator Rule Submission';
+		var body = '&body=Name: '+$('#rule-name').val()+'%0A%0ADescription: '+$('#rule-desc').val().replace('\n', '%0A');
+		window.location.href = 'mailto:'+email+subject+body;
+	});
 });
 
 

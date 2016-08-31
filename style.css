@@ -9,6 +9,10 @@ body {
 	background: #eeeeee;
 }
 
+a {
+	text-decoration: none;
+}
+
 i {
 	font-size: inherit !important;
 }

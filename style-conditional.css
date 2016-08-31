@@ -31,7 +31,8 @@
 .page1 .selected-file,
 .page1 .rule-required,
 .page1 #delete-all-button:hover,
-.page1 .text-under {
+.page1 .text-under,
+.page1 a {
 	color: hsl(208, 100%, 50%);
 }
 
@@ -94,7 +95,8 @@
 .page2 .selected-file,
 .page2 .rule-required,
 .page2 #delete-all-button:hover,
-.page2 .text-under {
+.page2 .text-under,
+.page2 a {
 	color: hsl(336, 100%, 50%);
 }
 
@@ -157,7 +159,8 @@
 .page3 .selected-file,
 .page3 .rule-required,
 .page3 #delete-all-button:hover,
-.page3 .text-under {
+.page3 .text-under,
+.page3 a {
 	color: hsl(43, 100%, 50%);
 }
 
@@ -220,7 +223,8 @@
 .page4 .selected-file,
 .page4 .rule-required,
 .page4 #delete-all-button:hover,
-.page4 .text-under {
+.page4 .text-under,
+.page4 a {
 	color: hsl(288, 100%, 50%);
 }
 
