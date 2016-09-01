@@ -412,7 +412,7 @@ $(document).ready(function () {
 			}
 
 			function addWrongAttribute(track, tag) {
-				$('#fail-attributes').append('<div class="fail-attribute"><div class="fail-track">'+track+'</div><div class="fail-tag">'+tag+'</div><div class="fail-icon"><i class="material-icons">error_outline</i><i class="material-icons attribute-wrong-icon">error_outline</i></div><div class="fail-value"><span class="fail-label">Expected:</span> '+spec[track][tag]+'<span class="fail-label">, Test:</span> '+testTracksObj[track][tag]+'</div></div>');
+				$('#fail-attributes').append('<div class="fail-attribute"><div class="fail-track">'+track+'</div><div class="fail-tag">'+tag+'</div><div class="fail-icon"><i class="material-icons">error_outline</i><i class="material-icons attribute-wrong-icon">error_outline</i></div><div class="fail-value" title="Expected: '+spec[track][tag]+', Test: '+testTracksObj[track][tag]+'"><span class="fail-label">Expected:</span> '+spec[track][tag]+'<span class="fail-label">, Test:</span> '+testTracksObj[track][tag]+'</div></div>');
 			}
 
 			var attributesMissing = JSON.parse(JSON.stringify(failSpec));
