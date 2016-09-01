@@ -644,25 +644,39 @@ input, textarea, keygen, select, button {
 	margin: 0;
 }
 
+.fail-attribute {
+	height: 2em;
+	width: 100%;
+	line-height: 2em;
+	display: flex;
+	flex-flow: row;
+	margin-bottom: 5px;
+}
+
+.fail-attribute > * {
+	flex: 0 1 auto;
+	margin-right: 10px;
+	position: relative;
+}
+
 .fail-track {
 	font-size: 0.8em;
 	color: grey;
 	background: rgba(0,0,0,0.05);
-	border-radius: 2px;
-	float: left;
-	margin-right: 10px;
-	padding: 0 10px;
 	text-transform: uppercase;
+	padding: 0 10px;
+	border-radius: 2px;
 }
 
-.fail-attribute, .fail-attribute i {
-	height: 2em;
-	line-height: 1.5em;
+.fail-icon i {
+	visibility: hidden;
 }
 
-.fail-attribute i {
-    position: absolute;
-    margin-left: 5px;
+.fail-icon .attribute-missing-icon, .fail-icon .attribute-wrong-icon {
+	position: absolute;
+	line-height: inherit;
+	left: 0;
+	visibility: visible;
 }
 
 .attribute-missing-icon {
@@ -671,6 +685,22 @@ input, textarea, keygen, select, button {
 
 .attribute-wrong-icon {
 	color: hsl(43, 100%, 45%);
+}
+
+.fail-value {
+	font-size: 0.7em;
+    height: 1.25rem;
+    line-height: 1.25rem;
+    background: hsl(43, 100%, 45%);
+    padding: 0 10px;
+    color: white;
+    top: 50%;
+    transform: translate(0, -50%);
+    border-radius: 2px;
+}
+
+.fail-label {
+	opacity: 0.6;
 }
 
 @media (max-width: 640px) {

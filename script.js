@@ -375,18 +375,23 @@ $(document).ready(function () {
 
 		var testTracks = getAttributes(oDOM);
 
+		var testTracksObj = {};
+
+		for (var j = 0; j < testTracks.length; j++) {
+			testTracksObj[testTracks[j].type] = {};
+			for (var i = 0; i < testTracks[j].attributes.length; i++) {
+				testTracksObj[testTracks[j].type][testTracks[j].attributes[i].tag] = testTracks[j].attributes[i].val;
+			}
+		}
+
 		var failSpec = JSON.parse(JSON.stringify(spec));
 
 		for (var track in spec) {
-			for (var j = 0; j < testTracks.length; j++) {
-				if (testTracks[j].type === track) {
-					for (var attribute in spec[track]) {
-						for (var i = 0; i < testTracks[j].attributes.length; i++) {
-							if (testTracks[j].attributes[i]['tag'] === attribute) {
-								if (spec[track][attribute] === testTracks[j].attributes[i]['val']) {
-									delete failSpec[track][attribute];
-								}
-							}
+			if (track in testTracksObj) {
+				for (var attribute in spec[track]) {
+					if (attribute in testTracksObj[track]) {
+						if (spec[track][attribute] === testTracksObj[track][attribute]) {
+							delete failSpec[track][attribute];
 						}
 					}
 				}
@@ -403,24 +408,20 @@ $(document).ready(function () {
 		}
 		else {
 			function addMissingAttribute(track, tag) {
-				$('#fail-attributes').append('<div class="fail-attribute"><div class="fail-track">'+track+'</div>'+tag+'<i class="material-icons attribute-missing-icon">block</i></div>');
+				$('#fail-attributes').append('<div class="fail-attribute"><div class="fail-track">'+track+'</div><div class="fail-tag">'+tag+'</div><div class="fail-icon"><i class="material-icons">block</i><i class="material-icons attribute-missing-icon">block</i></div></div>');
 			}
 
 			function addWrongAttribute(track, tag) {
-				$('#fail-attributes').append('<div class="fail-attribute"><div class="fail-track">'+track+'</div>'+tag+'<i class="material-icons attribute-wrong-icon">error_outline</i></div>');
+				$('#fail-attributes').append('<div class="fail-attribute"><div class="fail-track">'+track+'</div><div class="fail-tag">'+tag+'</div><div class="fail-icon"><i class="material-icons">error_outline</i><i class="material-icons attribute-wrong-icon">error_outline</i></div><div class="fail-value"><span class="fail-label">Expected:</span> '+spec[track][tag]+'<span class="fail-label">, Test:</span> '+testTracksObj[track][tag]+'</div></div>');
 			}
 
 			var attributesMissing = JSON.parse(JSON.stringify(failSpec));
 
 			for (var track in failSpec) {
-				for (var j = 0; j < testTracks.length; j++) {
-					if (testTracks[j].type === track) {
-						for (var attribute in failSpec[track]) {
-							for (var i = 0; i < testTracks[j].attributes.length; i++) {
-								if (testTracks[j].attributes[i]['tag'] === attribute) {
-									delete attributesMissing[track][attribute];
-								}
-							}
+				if (track in testTracksObj) {
+					for (var attribute in failSpec[track]) {
+						if (attribute in testTracksObj[track]) {
+							delete attributesMissing[track][attribute];
 						}
 					}
 				}
