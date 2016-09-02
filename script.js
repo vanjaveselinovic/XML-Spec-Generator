@@ -518,7 +518,7 @@ $(document).ready(function () {
 	});
 
 	$('#submit-button').click(function () {
-		var email = 'temp@temp.com';
+		var email = 'specifications@signiant.com';
 		var subject = '?subject=CloudSpeX Rule Generator Submission';
 		var body = '&body=Name: '+$('#rule-name').val()+'%0A%0ADescription: '+$('#rule-desc').val().replace('\n', '%0A');
 		window.location.href = 'mailto:'+email+subject+body;
